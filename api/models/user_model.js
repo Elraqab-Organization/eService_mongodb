@@ -1,4 +1,4 @@
-const database = require('../database');
+import { findOneDocumentByName } from '../database';
 
 
 class UserModel {
@@ -7,16 +7,8 @@ class UserModel {
         UserModel.instance = this;
     }
 
-    get() { return database.getList('users') }
-
-    getById(id) { return database.get('users', id) }
-
-    create(user) { return database.create('users', user) }
-
-    delete(id) { return database.delete('users', id) }
-
-    update(id, user) { return database.set('users', id, user) }
+    get() { return findOneDocumentByName("listingsAndReviews", "Infinite Views") }
 
 }
 
-module.exports = new UserModel();
+export default new UserModel();
