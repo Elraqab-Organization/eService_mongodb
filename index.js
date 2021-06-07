@@ -1,6 +1,6 @@
 import express, { json } from "express";
 const app = express();
-import userRouter from './controllers/user_controller';
+import userRouter from './api/controllers/user_controller';
 
 app.use(json())
 app.use('/users', userRouter)
