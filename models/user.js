@@ -55,7 +55,7 @@ const userSchema = new mongoose.Schema({
     //to be moved to its own api
     favouriteServiceProviders: [],
     favouriteCategories: [],
-    ordersList: [ordersSchema],
+    // ordersList: [ordersSchema],
 
 
 });

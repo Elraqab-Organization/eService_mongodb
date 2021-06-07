@@ -2,10 +2,13 @@ const mongoose = require('mongoose');
 const feedbackSchema = require("./feedback");
 
 const ordersSchema = new mongoose.Schema({
-    id: String,
+
     customerId: String,
     serviceProviderId: String,
-    postId: String,
+    postId: {
+        type: String,
+        required: false
+    },
     status: String,
     problemDiscription: String,
     serviceDescription: String,
@@ -20,4 +23,4 @@ const ordersSchema = new mongoose.Schema({
 
 });
 
-module.exports = mongoose.model('orders', ordersSchema)
+module.exports = mongoose.model('Order', ordersSchema)
