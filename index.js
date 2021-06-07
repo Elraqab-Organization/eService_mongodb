@@ -1,12 +1,13 @@
-import express, { json } from "express";
+const express = require("express")
 const app = express();
-import userRouter from './api/controllers/user_controller';
+const userRouter = require('./api/controllers/user_controller');
 
-app.use(json())
+app.use(express.json())
 app.use('/users', userRouter)
 
-export const api = functions.https.onRequest(app)
+// exports.api = functions.https.onRequest(app)
 
-export const functionsTimeOut = functions.runWith({
-    timeoutSeconds: 300
-})
+// // To handle "Function Timeout" exception
+// exports.functionsTimeOut = functions.runWith({
+//     timeoutSeconds: 300
+// })

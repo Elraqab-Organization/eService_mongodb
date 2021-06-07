@@ -13,14 +13,18 @@ class Database {
         this.dbName = "sample_airbnb"
 
         try {
-            await client.connect();
+            async() => {
+                await client.connect();
+            }
 
         } catch (error) {
 
             console.error(error)
 
         } finally {
-            await client.close();
+            async() => {
+                await client.close();
+            }
 
         }
 
@@ -50,9 +54,7 @@ class Database {
     }
     async upsertDocumentByName(collection, docName, document) {
         const result = await this.client.db(this.dbName).collection(collection)
-            .updateOne({ name: docName },
-                { $set: document },
-                { upsert: true });
+            .updateOne({ name: docName }, { $set: document }, { upsert: true });
 
         return result
     }
@@ -64,4 +66,4 @@ class Database {
 
 }
 
-export default new Database()
+module.exports = Database;
