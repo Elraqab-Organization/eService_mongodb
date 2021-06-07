@@ -9,13 +9,16 @@ const postSchema = new mongoose.Schema({
     description: String,
     cancelationFee: Boolean,
     tag: [],
-    proposal: [{
-        id: String,
-        postId: String,
-        serviceProviderId: String,
-        description: String,
-        steps: []
-    }]
+    proposal: [
+
+        {
+            proposalId: String,
+            postId: String,
+            serviceProviderId: String,
+            description: String,
+            steps: []
+        }
+    ]
 
 })
 
