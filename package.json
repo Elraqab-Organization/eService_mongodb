@@ -1,0 +1,28 @@
+{
+    "name": "servicify-backend",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "dependencies": {
+        "mongodb": "^3.6.9",
+        "nodemon": "^2.0.7"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "start": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/marawanthedev/Servicify-backend.git"
+    },
+    "engines": {
+        "node": "14.15.1"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/marawanthedev/Servicify-backend/issues"
+    },
+    "homepage": "https://github.com/marawanthedev/Servicify-backend#readme"
+}
