@@ -1,0 +1,307 @@
+[
+    [{
+            "id": "dpijfipsdf",
+            "firstName": "Ahmad",
+            "lastName": "Elraqab",
+            "email": "amjrr99@gmail.comF",
+            "password": "adfdkflsdfs",
+            "gender": "male",
+            "phoneNumber": "+601127652855",
+            "country": "SaudiArabia",
+            "city": "Mecca",
+            "lag": "65.6565435",
+            "lat": "56.65df654",
+            "postalCode": "sfgfd",
+            "token": "idsfiyhisfhiuwehfiuhwfiiwuhfiuhwef",
+            "imgSrc": "idsfiyhisfhiuwehfiuhwfiiwuhfiuhwef",
+            "displayLanguage": "English",
+            "address": [{
+                "name": "Sheikh Jarah",
+                "description": "lorem",
+                "lug": "65.6565435",
+                "lat": "56.65df654"
+            }],
+            "paymentMethod": [{
+                    "name": "credit card",
+                    "active": false,
+                    "card": [{
+                        "name": "Ahmad Mousa Jaber Elraqab",
+                        "cardNumber": "12344651234546461",
+                        "expiryMonth": "06",
+                        "expiryYear": "2022",
+                        "primary": false
+                    }]
+                },
+                {
+                    "name": "cash",
+                    "active": true
+                }
+            ],
+            "notification": {
+                "showNotificatoin": false,
+                "allowNotificationDot": false,
+                "excutivePrograms": false,
+                "discounts&deals": false
+            },
+            "notificationList": [],
+            "favouriteServiceProviders": [],
+            "favouriteCategories": [],
+            "ordersList": [{
+                "id": "apdk;afpkads",
+                "customerId": "ldfjsksjdfljsdlf",
+                "serviceProviderId": "ldfjsksjdfljsdlf",
+                "postId": "sodfjlksf",
+                "status": "pending",
+                "problemDiscription": "lorem",
+                "serviceDescription": "lorem",
+                "diagnosingFees": 50.00,
+                "serviceFees": 50.00,
+                "provisionDate": "20/12/2020",
+                "timestamp": "19/12/2020",
+                "paymentMethod": "cash",
+                "responseTime": "10minutes",
+                "feedback": {
+                    "id": "apdk;afpkads",
+                    "type": "completed/canceled",
+                    "isGiven": false,
+                    "feedback": "lorem"
+                },
+                "steps": [
+                    "lorem",
+                    "lorem",
+                    "lorem",
+                    "lorem",
+                    "lorem"
+                ]
+            }],
+            "post": [{
+                "id": "apdk;afpkads",
+                "customerId": "ldfjsksjdfljsdlf",
+                "timestamp": "asndlad",
+                "description": "lorem",
+                "cancelationFee": false,
+                "tag": [],
+                "proposals": [{
+                    "id": "apdk;afpkads",
+                    "postId": "ldfjsksjdfljsdlf",
+                    "serviceProviderId": "ldfjsksjdfljsdlf",
+                    "description": "lorem",
+                    "steps": [
+                        "lorem",
+                        "lorem",
+                        "lorem",
+                        "lorem",
+                        "lorem"
+                    ]
+                }]
+            }],
+            "madeRequests": [{
+                "id": "ldfjsksjdfljsdlf",
+                "customerId": "ldfjsksjdfljsdlf",
+                "description": "lorem",
+                "fees": 10.00
+            }],
+            "feedback": [{
+                    "orderId": "fklsdfklsflk"
+                },
+                {
+                    "orderId": "fklsdfklsflk"
+                },
+                {
+                    "orderId": "fklsdfklsflk"
+                }
+            ],
+            "servedOrdersList": [{
+                "id": "apdk;afpkads",
+                "customerId": "ldfjsksjdfljsdlf",
+                "timestamp": "asndlad",
+                "description": "lorem",
+                "cancelationFee": false,
+                "tag": [],
+                "poposals": [{
+                    "id": "apdk;afpkads",
+                    "description": "lorem",
+                    "steps": [
+                        "lorem",
+                        "lorem",
+                        "lorem",
+                        "lorem",
+                        "lorem"
+                    ]
+                }]
+            }],
+            "sentProposals": [{
+                "id": "apdk;afpkads",
+                "postId": "sodfjlksf",
+                "serviceProviderId": "ldfjsksjdfljsdlf",
+                "description": "lorem",
+                "steps": [
+                    "lorem",
+                    "lorem",
+                    "lorem",
+                    "lorem",
+                    "lorem"
+                ]
+            }],
+            "recivedRequests": [{
+                "id": "ldfjsksjdfljsdlf",
+                "customerId": "ldfjsksjdfljsdlf",
+                "description": "lorem",
+                "fees": 10.00
+            }]
+        }
+
+
+    ],
+    [{
+        "id": "dpijfipsdf",
+        "firstName": "Ahmad",
+        "lastName": "Elraqab",
+        "email": "amjrr99@gmail.comF",
+        "password": "adfdkflsdfs",
+        "gender": "male",
+        "phoneNumber": "+601127652855",
+        "country": "SaudiArabia",
+        "city": "Mecca",
+        "lag": "65.6565435",
+        "lat": "56.65df654",
+        "postalCode": "sfgfd",
+        "token": "idsfiyhisfhiuwehfiuhwfiiwuhfiuhwef",
+        "imgSrc": "idsfiyhisfhiuwehfiuhwfiiwuhfiuhwef",
+        "displayLanguage": "English",
+        "address": [{
+            "name": "Sheikh Jarah",
+            "description": "lorem",
+            "lug": "65.6565435",
+            "lat": "56.65df654"
+        }],
+        "paymentMethod": [{
+                "name": "credit card",
+                "active": false,
+                "card": [{
+                    "name": "Ahmad Mousa Jaber Elraqab",
+                    "cardNumber": "12344651234546461",
+                    "expiryMonth": "06",
+                    "expiryYear": "2022",
+                    "primary": false
+                }]
+            },
+            {
+                "name": "cash",
+                "active": true
+            }
+        ],
+        "notification": {
+            "showNotificatoin": false,
+            "allowNotificationDot": false,
+            "excutivePrograms": false,
+            "discounts&deals": false
+        },
+        "notificationList": [],
+        "favouriteServiceProviders": [],
+        "favouriteCategories": [],
+        "ordersList": [{
+            "id": "apdk;afpkads",
+            "customerId": "ldfjsksjdfljsdlf",
+            "serviceProviderId": "ldfjsksjdfljsdlf",
+            "postId": "sodfjlksf",
+            "status": "pending",
+            "problemDiscription": "lorem",
+            "serviceDescription": "lorem",
+            "diagnosingFees": 50.00,
+            "serviceFees": 50.00,
+            "provisionDate": "20/12/2020",
+            "timestamp": "19/12/2020",
+            "paymentMethod": "cash",
+            "responseTime": "10minutes",
+            "feedback": {
+                "id": "apdk;afpkads",
+                "type": "completed/canceled",
+                "isGiven": false,
+                "feedback": "lorem"
+            },
+            "steps": [
+                "lorem",
+                "lorem",
+                "lorem",
+                "lorem",
+                "lorem"
+            ]
+        }],
+        "post": [{
+            "id": "apdk;afpkads",
+            "customerId": "ldfjsksjdfljsdlf",
+            "timestamp": "asndlad",
+            "description": "lorem",
+            "cancelationFee": false,
+            "tag": [],
+            "proposals": [{
+                "id": "apdk;afpkads",
+                "postId": "ldfjsksjdfljsdlf",
+                "serviceProviderId": "ldfjsksjdfljsdlf",
+                "description": "lorem",
+                "steps": [
+                    "lorem",
+                    "lorem",
+                    "lorem",
+                    "lorem",
+                    "lorem"
+                ]
+            }]
+        }],
+        "madeRequests": [{
+            "id": "ldfjsksjdfljsdlf",
+            "customerId": "ldfjsksjdfljsdlf",
+            "description": "lorem",
+            "fees": 10.00
+        }],
+        "feedback": [{
+                "orderId": "fklsdfklsflk"
+            },
+            {
+                "orderId": "fklsdfklsflk"
+            },
+            {
+                "orderId": "fklsdfklsflk"
+            }
+        ],
+        "servedOrdersList": [{
+            "id": "apdk;afpkads",
+            "customerId": "ldfjsksjdfljsdlf",
+            "timestamp": "asndlad",
+            "description": "lorem",
+            "cancelationFee": false,
+            "tag": [],
+            "poposals": [{
+                "id": "apdk;afpkads",
+                "description": "lorem",
+                "steps": [
+                    "lorem",
+                    "lorem",
+                    "lorem",
+                    "lorem",
+                    "lorem"
+                ]
+            }]
+        }],
+        "sentProposals": [{
+            "id": "apdk;afpkads",
+            "postId": "sodfjlksf",
+            "serviceProviderId": "ldfjsksjdfljsdlf",
+            "description": "lorem",
+            "steps": [
+                "lorem",
+                "lorem",
+                "lorem",
+                "lorem",
+                "lorem"
+            ]
+        }],
+        "recivedRequests": [{
+            "id": "ldfjsksjdfljsdlf",
+            "customerId": "ldfjsksjdfljsdlf",
+            "description": "lorem",
+            "fees": 10.00
+        }]
+    }]
+]
