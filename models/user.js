@@ -24,12 +24,14 @@ const userSchema = new mongoose.Schema({
     profileImgSrc: String,
     displayLanguage: String,
     address: [{
-        name: String,
-        description: String,
-        lug: Number,
-        lat: Number
-    }],
+            name: String,
+            description: String,
+            lug: Number,
+            lat: Number,
+            default: {}
+        },
 
+    ],
     paymentMethod: [{
 
         name: String,
@@ -45,16 +47,25 @@ const userSchema = new mongoose.Schema({
 
     }],
     //to be moved to its own api
-    notification: {
+    notificationSettings: {
         showNotification: Boolean,
         allowNotificationDot: Boolean,
         excutivePrograms: Boolean,
         discountsAnddeals: Boolean,
     },
-    notificationList: [],
+    notificationList: {
+        type: Array,
+        default: []
+    },
     //to be moved to its own api
-    favouriteServiceProviders: [],
-    favouriteCategories: [],
+    favouriteServiceProviders: {
+        type: Array,
+        default: []
+    },
+    favouriteCategories: {
+        type: Array,
+        default: []
+    },
     // ordersList: [ordersSchema],
 
 

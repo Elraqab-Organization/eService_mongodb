@@ -5,8 +5,8 @@ const Order = require('../models/orders');
 // Getting all
 router.get('/', async(req, res) => {
     try {
-        const order = await Order.find()
-        res.json(order)
+        const orders = await Order.find()
+        res.json(orders)
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -20,8 +20,19 @@ router.get('/:id', getOrder, (req, res) => {
 // Creating one
 router.post('/', async(req, res) => {
     const order = new Order({
-        name: req.body.name,
-        password: req.body.password,
+        customerId: req.body.customerId,
+        serviceProviderId: req.body.serviceProviderId,
+        postId: req.body.postId,
+        status: req.body.status,
+        problemDiscription: req.body.problemDiscription,
+        serviceDescription: req.body.serviceDescription,
+        diagnosingFees: req.body.diagnosingFees,
+        serviceFees: req.body.serviceFees,
+        provisionDate: req.body.provisionDate,
+        timestamp: req.body.timestamp,
+        paymentMethod: req.body.paymentMethod,
+        responseTime: req.body.responseTime,
+        steps: req.body.responseTime
     })
     try {
         const newUser = await order.save()

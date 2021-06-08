@@ -21,8 +21,28 @@ router.get('/:id', getUser, (req, res) => {
 // Creating one
 router.post('/', async(req, res) => {
     const user = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         name: req.body.name,
+        email: req.body.email,
         password: req.body.password,
+        gender: req.body.gender,
+        phoneNumber: req.body.phoneNumber,
+        country: req.body.country,
+        city: req.body.city,
+        lag: req.body.lag,
+        lat: req.body.lat,
+        postalCode: req.body.postalCode,
+        token: req.body.token,
+        profileImgSrc: req.body.profileImgSrc,
+        displayLanguage: req.body.displayLanguage,
+        address: req.body.address,
+        //to be moved to its own api
+        notificationSettings: req.body.notificationSettings,
+        notificationList: req.body.notificationList,
+        //to be moved to its own api
+        favouriteServiceProviders: req.body.favouriteServiceProviders,
+        favouriteCategories: req.body.favouriteCategories,
     })
     try {
         const newUser = await user.save()
