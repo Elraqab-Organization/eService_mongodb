@@ -85,9 +85,7 @@ router.patch('/:id', getUser, async (req, res) => {
     if (req.body.name != null) {
         res.user.name = req.body.name
     }
-    if (req.body.subscribedToChannel != null) {
-        res.user.subscribedToChannel = req.body.subscribedToChannel
-    }
+
     try {
         const updatedUser = await res.user.save()
         res.json(updatedUser)
@@ -107,17 +105,30 @@ router.delete('/:id', getUser, async (req, res) => {
 })
 
 async function getUser(req, res, next) {
-    let subscriber
+    console.log("getting users")
+    console.log(req.params)
+    let user
     try {
-        subscriber = await User.findById(req.params.id)
-        if (subscriber == null) {
+        user = await User.find({
+            "_id": req.params.id
+        }, function(err, data) {
+            if (err) {
+                err.status = 406;
+                return next(err)
+            }
+            return res.status(201).json({
+                message: "sucess",
+                data: data
+            })
+        })
+        if (user == null) {
             return res.status(404).json({ message: 'Cannot find user' })
         }
     } catch (err) {
         return res.status(500).json({ message: err.message })
     }
 
-    res.subscriber = subscriber
+    res.user = user
     next()
 }
 
