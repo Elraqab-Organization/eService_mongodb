@@ -4,12 +4,40 @@ const User = require('../models/user')
 
 
 // Getting all
-router.get('/', async(req, res) => {
+router.get('/', async (req, res) => {
+
     try {
-        const users = await User.find()
-        res.json(users)
+        let user;
+        user = await User.find();
+        res.status(201).json(user);
+
+
     } catch (err) {
-        res.status(500).json({ message: err.message })
+        res.status(500).json({ message: err.message });
+    }
+    
+})
+router.get('/auth', async (req, res) => {
+
+    try {
+        let user;
+        console.log(req.query)
+        if (Object.keys(req.query).length == 0) {
+            console.log("hello")
+            res.redirect('/users')
+
+        } else {
+            let email = req.query.email;
+            let password = req.query.password;
+            user = await User.find({
+                email: email,
+                password: password
+            });
+            res.status(200).json(user);
+        }
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
     }
 })
 
@@ -19,7 +47,7 @@ router.get('/:id', getUser, (req, res) => {
 })
 
 // Creating one
-router.post('/', async(req, res) => {
+router.post('/', async (req, res) => {
     const user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -53,7 +81,7 @@ router.post('/', async(req, res) => {
 })
 
 // Updating One
-router.patch('/:id', getUser, async(req, res) => {
+router.patch('/:id', getUser, async (req, res) => {
     if (req.body.name != null) {
         res.user.name = req.body.name
     }
@@ -69,7 +97,7 @@ router.patch('/:id', getUser, async(req, res) => {
 })
 
 // Deleting One
-router.delete('/:id', getUser, async(req, res) => {
+router.delete('/:id', getUser, async (req, res) => {
     try {
         await res.user.remove()
         res.json({ message: 'Deleted user' })
