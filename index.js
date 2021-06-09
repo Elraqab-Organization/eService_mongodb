@@ -3,8 +3,10 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-// const uri = process.env.MONGO_DB_URI || 'mongodb+srv://Ulan:123@cluster1.qcpvo.mongodb.net/Students?retryWrites=true&w=majority'
-const uri = "mongodb://localhost/playground";
+const uri =
+  process.env.MONGO_DB_URI ||
+  "mongodb+srv://Ulan:123@cluster1.qcpvo.mongodb.net/Students?retryWrites=true&w=majority";
+// const uri = "mongodb://localhost/playground";
 
 mongoose.connect(uri, { useNewUrlParser: true });
 const db = mongoose.connection;
