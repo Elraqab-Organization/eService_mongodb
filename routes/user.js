@@ -5,9 +5,31 @@ const User = require('../models/user')
 
 // Getting all
 router.get('/', async(req, res) => {
+
+    console.log(req.query)
+        // query strings
+
     try {
-        const users = await User.find()
-        res.json(users)
+
+        // const users = await User.find()
+        // res.json(users)
+        console.log("req query is" + req.query)
+        let users;
+        if (req.query != {}) {
+
+            let id = req.query.id
+            let email = req.query.email;
+            let password = req.query.password;
+            users = await User.find({
+                email: email,
+                password: password,
+
+            })
+        } else {
+            users = User.find();
+        }
+
+        res.status(201).json(users)
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -57,9 +79,7 @@ router.patch('/:id', getUser, async(req, res) => {
     if (req.body.name != null) {
         res.user.name = req.body.name
     }
-    if (req.body.subscribedToChannel != null) {
-        res.user.subscribedToChannel = req.body.subscribedToChannel
-    }
+
     try {
         const updatedUser = await res.user.save()
         res.json(updatedUser)
@@ -79,17 +99,30 @@ router.delete('/:id', getUser, async(req, res) => {
 })
 
 async function getUser(req, res, next) {
-    let subscriber
+    console.log("getting users")
+    console.log(req.params)
+    let user
     try {
-        subscriber = await User.findById(req.params.id)
-        if (subscriber == null) {
+        user = await User.find({
+            "_id": req.params.id
+        }, function(err, data) {
+            if (err) {
+                err.status = 406;
+                return next(err)
+            }
+            return res.status(201).json({
+                message: "sucess",
+                data: data
+            })
+        })
+        if (user == null) {
             return res.status(404).json({ message: 'Cannot find user' })
         }
     } catch (err) {
         return res.status(500).json({ message: err.message })
     }
 
-    res.subscriber = subscriber
+    res.user = user
     next()
 }
 

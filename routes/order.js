@@ -47,9 +47,7 @@ router.patch('/:id', getOrder, async(req, res) => {
     if (req.body.name != null) {
         res.order.name = req.body.name
     }
-    if (req.body.subscribedToChannel != null) {
-        res.order.subscribedToChannel = req.body.subscribedToChannel
-    }
+
     try {
         const updatedOrder = await res.order.save()
         res.json(updatedOrder)
