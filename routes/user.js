@@ -6,32 +6,38 @@ const User = require('../models/user')
 // Getting all
 router.get('/', async(req, res) => {
 
-    console.log(req.query)
-        // query strings
+    try {
+        let user;
+        user = await User.find();
+        res.status(201).json(user);
+
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+
+})
+router.get('/auth', async(req, res) => {
 
     try {
+        let user;
+        console.log(req.query)
+        if (Object.keys(req.query).length == 0) {
+            console.log("hello")
+            res.redirect('/users')
 
-        // const users = await User.find()
-        // res.json(users)
-        console.log("req query is" + req.query)
-        let users;
-        if (req.query != {}) {
-
-            let id = req.query.id
+        } else {
             let email = req.query.email;
             let password = req.query.password;
-            users = await User.find({
+            user = await User.find({
                 email: email,
-                password: password,
-
-            })
-        } else {
-            users = User.find();
+                password: password
+            });
+            res.status(200).json(user);
         }
 
-        res.status(201).json(users)
     } catch (err) {
-        res.status(500).json({ message: err.message })
+        res.status(500).json({ message: err.message });
     }
 })
 
