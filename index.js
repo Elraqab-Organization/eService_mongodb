@@ -1,22 +1,28 @@
-const express = require('express')
-const app = express()
-const mongoose = require('mongoose')
-var cors = require('cors')
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+var cors = require("cors");
 
-mongoose.connect("mongodb+srv://ahmadelraqab:123123258Aa@cluster0.whjky.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true })
-const db = mongoose.connection
-db.on('error', (error) => console.error(error))
-db.once('open', () => console.log('Connected to Database'))
+mongoose.connect(
+  "mongodb+srv://ahmadelraqab:123123258Aa@cluster0.whjky.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  { useNewUrlParser: true, useUnifiedTopology: true }
+);
 
-app.use(express.json())
-app.options('*', cors());
+const db = mongoose.connection;
+db.on("error", (error) => console.error(error));
+db.once("open", () => console.log("Connected to Database"));
 
-const subscribersRouter = require('./routes/subscribers')
+app.use(express.json());
+app.options("*", cors());
+
+const subscribersRouter = require("./routes/subscribers");
 const usersRouter = require("./routes/user");
-const ordersRouter = require('./routes/order')
-app.use('/subscribers', subscribersRouter)
-app.use('/users', usersRouter)
-app.use("/orders", ordersRouter)
+const ordersRouter = require("./routes/order");
+const postsRouter = require("./routes/posts");
 
+app.use("/subscribers", subscribersRouter);
+app.use("/users", usersRouter);
+app.use("/orders", ordersRouter);
+app.use("/posts", postsRouter);
 
-app.listen(process.env.PORT || 5000, () => console.log('Server Started'))
+app.listen(process.env.PORT || 5000, () => console.log("Server Started"));

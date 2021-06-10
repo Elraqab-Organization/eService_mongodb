@@ -10,14 +10,17 @@ router.get("/", async (req, res) => {
     else res.json(result);
   });
 
-  //   const post = new Post({
-  //     customerId: "custome1ID",
-  //     description: "lorem lorem lorem lorem",
-  //     cancelationFee: 10.0,
-  //     tag: ["Electrical", "Plumber", "House Cleaning"],
-  //   });
+  // const post = new Post({
+  //   customerId: "custome1ID",
+  //   description: "lorem lorem lorem lorem",
+  //   cancelationFee: 10.0,
+  //   tag: ["Electrical", "Plumber", "House Cleaning"],
+  // });
 
-  //   await post.save();
+  // await post.save(function (err, result) {
+  //   if (err) console.log(err);
+  //   else res.json(result);
+  // });
 });
 
 // tested successful
