@@ -7,7 +7,7 @@ var cors = require('cors')
 // cors settings
 
 // Getting all
-router.get('/', cors(), async(req, res) => {
+router.get('/', cors(), async (req, res) => {
 
     try {
         let user;
@@ -20,17 +20,16 @@ router.get('/', cors(), async(req, res) => {
     }
 
 })
-router.get('/auth', cors(), async(req, res) => {
+router.get('/login/auth', cors(), async (req, res) => {
 
     try {
         let user;
         console.log(req.query.length)
         if (Object.keys(req.query).length == 0) {
-            console.log("hello")
-            res.redirect('/users')
+
+            res.status(500).json({ message: "lost of required data" });
 
         } else {
-            console.log("insides")
             let email = req.query.email;
             let password = req.query.password;
             user = await User.find({
@@ -44,6 +43,57 @@ router.get('/auth', cors(), async(req, res) => {
         res.status(500).json({ message: err.message });
     }
 })
+router.get('/signup/auth', cors(), async (req, res) => {
+
+    try {
+        let user;
+        let email = req.query.email;
+        let password = req.query.password;
+        let fullname = req.query.fullName;
+
+        if (Object.keys(req.query).length == 0) {
+            res.status(500).json({ message: "lost of required data" });
+        } else {
+            user = await User.find({
+                email: email,
+            });
+        }
+        if (Object.keys(user).length == 0) {
+            user = new User({
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                name: fullname,
+                email: email,
+                password: password,
+                gender: req.body.gender,
+                phoneNumber: req.body.phoneNumber,
+                country: req.body.country,
+                city: req.body.city,
+                lag: req.body.lag,
+                lat: req.body.lat,
+                postalCode: req.body.postalCode,
+                token: req.body.token,
+                profileImgSrc: req.body.profileImgSrc,
+                displayLanguage: req.body.displayLanguage,
+                address: req.body.address,
+                //to be moved to its own api
+                notificationSettings: req.body.notificationSettings,
+                notificationList: req.body.notificationList,
+                //to be moved to its own api
+                favouriteServiceProviders: req.body.favouriteServiceProviders,
+                favouriteCategories: req.body.favouriteCategories,
+            })
+            user.save();
+            res.status(200).json(user);
+        } else {
+
+            res.status(500).json({ message: "email already exist" });
+        }
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+})
 
 // Getting One
 router.get('/:id', getUser, (req, res) => {
@@ -51,7 +101,7 @@ router.get('/:id', getUser, (req, res) => {
 })
 
 // Creating one
-router.post('/', async(req, res) => {
+router.post('/', async (req, res) => {
     const user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -85,7 +135,7 @@ router.post('/', async(req, res) => {
 })
 
 // Updating One
-router.patch('/:id', getUser, async(req, res) => {
+router.patch('/:id', getUser, async (req, res) => {
     if (req.body.name != null) {
         res.user.name = req.body.name
     }
@@ -99,7 +149,7 @@ router.patch('/:id', getUser, async(req, res) => {
 })
 
 // Deleting One
-router.delete('/:id', getUser, async(req, res) => {
+router.delete('/:id', getUser, async (req, res) => {
     try {
         await res.user.remove()
         res.json({ message: 'Deleted user' })
@@ -115,7 +165,7 @@ async function getUser(req, res, next) {
     try {
         user = await User.find({
             "_id": req.params.id
-        }, function(err, data) {
+        }, function (err, data) {
             if (err) {
                 err.status = 406;
                 return next(err)
