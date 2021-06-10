@@ -1,10 +1,13 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
+var cors = require('cors')
 
+
+// cors settings
 
 // Getting all
-router.get('/', async(req, res) => {
+router.get('/', cors(), async(req, res) => {
 
     try {
         let user;
@@ -17,7 +20,7 @@ router.get('/', async(req, res) => {
     }
 
 })
-router.get('/auth', async(req, res) => {
+router.get('/auth', cors(), async(req, res) => {
 
     try {
         let user;
