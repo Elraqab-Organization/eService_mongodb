@@ -24,12 +24,13 @@ router.get('/auth', cors(), async(req, res) => {
 
     try {
         let user;
-        console.log(req.query)
+        console.log(req.query.length)
         if (Object.keys(req.query).length == 0) {
             console.log("hello")
             res.redirect('/users')
 
         } else {
+            console.log("insides")
             let email = req.query.email;
             let password = req.query.password;
             user = await User.find({
