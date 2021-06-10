@@ -1,9 +1,10 @@
 const express = require('express')
 const router = express.Router()
 const Order = require('../models/orders');
+var cors = require('cors')
 
 // Getting all
-router.get('/', async(req, res) => {
+router.get('/', cors(),async(req, res) => {
     try {
         const orders = await Order.find()
         res.json(orders)

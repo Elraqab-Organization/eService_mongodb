@@ -5,47 +5,58 @@ const ordersSchema = new mongoose.Schema({
 
     customerId: {
         type: String,
-        default: ""
+        default: "",
+        required: true,
     },
     serviceProviderId: {
         type: String,
-        default: ""
+        default: "",
+        required: true,
     },
     postId: {
         type: String,
-        default: ""
+        default: "",
+        required: true,
     },
     status: {
         type: String,
-        default: ""
+        default: "",
+        required: true,
     },
     problemDiscription: {
         type: String,
-        default: ""
+        default: "",
+        required: true,
     },
     serviceDescription: {
         type: String,
-        default: ""
+        default: "",
+        required: true,
     },
     diagnosingFees: {
         type: Number,
-        default: ""
+        default: "",
+        required: true,
     },
     serviceFees: {
         type: Number,
-        default: ""
+        default: "",
+        required: true,
     },
     provisionDate: {
         type: Date,
-        default: ""
+        default: Date.now(),
+        required: true,
     },
     timestamp: {
         type: Date,
-        default: ""
+        default: Date.now(),
+        required: true,
     },
     responseTime: {
         type: Date,
-        default: ""
+        default: Date.now(),
+        required: true,
     },
     // feedback:
     steps: []
