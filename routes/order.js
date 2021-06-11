@@ -4,9 +4,9 @@ const Order = require('../models/orders');
 var cors = require('cors')
 
 // Getting all
-router.get('/', cors(),async(req, res) => {
+router.get('/', cors(), async (req, res) => {
     try {
-        const orders = await Order.find()
+        const orders = await Order.find({ customerId: req.body.customerId })
         res.json(orders)
     } catch (err) {
         res.status(500).json({ message: err.message })
@@ -19,7 +19,7 @@ router.get('/:id', getOrder, (req, res) => {
 })
 
 // Creating one
-router.post('/', async(req, res) => {
+router.post('/', async (req, res) => {
     const order = new Order({
         customerId: req.body.customerId,
         serviceProviderId: req.body.serviceProviderId,
@@ -44,7 +44,7 @@ router.post('/', async(req, res) => {
 })
 
 // Updating One
-router.patch('/:id', getOrder, async(req, res) => {
+router.patch('/:id', getOrder, async (req, res) => {
     if (req.body.name != null) {
         res.order.name = req.body.name
     }
@@ -58,7 +58,7 @@ router.patch('/:id', getOrder, async(req, res) => {
 })
 
 // Deleting One
-router.delete('/:id', getOrder, async(req, res) => {
+router.delete('/:id', getOrder, async (req, res) => {
     try {
         await res.order.remove()
         res.json({ message: 'Deleted order' })
