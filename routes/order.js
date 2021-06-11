@@ -23,7 +23,7 @@ router.get('/:id', getOrder, (req, res) => {
 })
 
 // Creating one
-router.post('/', async (req, res) => {
+router.post('/create', async (req, res) => {
     const order = new Order({
         customerId: req.body.customerId,
         serviceProviderId: req.body.serviceProviderId,
