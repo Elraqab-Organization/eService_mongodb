@@ -7,8 +7,10 @@ var cors = require('cors')
 router.post('/', cors(), async (req, res) => {
     try {
         const orders = await Order.find({ customerId: req.body.customerId })
-        if (orders.length != 0)
+        if (orders.length != 0) {
+
             res.json(orders)
+        }
         else
             res.json({ message: "No orders was found" })
 
@@ -24,6 +26,9 @@ router.get('/:id', getOrder, (req, res) => {
 
 // Creating one
 router.post('/create', async (req, res) => {
+    const today = new Date()
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     const order = new Order({
         customerId: req.body.customerId,
         serviceProviderId: req.body.serviceProviderId,
@@ -33,11 +38,14 @@ router.post('/create', async (req, res) => {
         serviceDescription: req.body.serviceDescription,
         diagnosingFees: req.body.diagnosingFees,
         serviceFees: req.body.serviceFees,
-        provisionDate: req.body.provisionDate,
+        provisionDate: today.toLocaleDateString(undefined, options),
         timestamp: req.body.timestamp,
         paymentMethod: req.body.paymentMethod,
         responseTime: req.body.responseTime,
-        steps: req.body.responseTime
+        steps: req.body.responseTime,
+        city: req.body.city,
+        time: Math.round(today.getHours() / 24) + " hrs ago",
+        day: days[today.getDay()]
     })
     try {
         const newUser = await order.save()

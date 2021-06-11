@@ -44,8 +44,7 @@ const ordersSchema = new mongoose.Schema({
         required: true,
     },
     provisionDate: {
-        type: Date,
-        default: Date.now(),
+        type: String,
         required: true,
     },
     timestamp: {
@@ -59,7 +58,22 @@ const ordersSchema = new mongoose.Schema({
         required: true,
     },
     // feedback:
-    steps: []
+    steps: [],
+    city: {
+        type: String,
+        default: "",
+        required: true
+    },
+    time: {
+        type: String,
+        default: "",
+        required: true
+    },
+    day: {
+        type: String,
+        default: "",
+        required: true
+    }
 
 });
 
