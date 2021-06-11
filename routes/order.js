@@ -4,10 +4,14 @@ const Order = require('../models/orders');
 var cors = require('cors')
 
 // Getting all
-router.get('/', cors(), async (req, res) => {
+router.post('/', cors(), async (req, res) => {
     try {
         const orders = await Order.find({ customerId: req.body.customerId })
-        res.json(orders)
+        if (orders.length != 0)
+            res.json(orders)
+        else
+            res.json({ message: "No orders was found" })
+
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
