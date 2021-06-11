@@ -4,10 +4,16 @@ const Order = require('../models/orders');
 var cors = require('cors')
 
 // Getting all
-router.get('/', cors(),async(req, res) => {
+router.post('/', cors(), async (req, res) => {
     try {
-        const orders = await Order.find()
-        res.json(orders)
+        const orders = await Order.find({ customerId: req.body.customerId })
+        if (orders.length != 0) {
+
+            res.json(orders)
+        }
+        else
+            res.json({ message: "No orders was found" })
+
     } catch (err) {
         res.status(500).json({ message: err.message })
     }
@@ -19,7 +25,10 @@ router.get('/:id', getOrder, (req, res) => {
 })
 
 // Creating one
-router.post('/', async(req, res) => {
+router.post('/create', async (req, res) => {
+    const today = new Date()
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     const order = new Order({
         customerId: req.body.customerId,
         serviceProviderId: req.body.serviceProviderId,
@@ -29,11 +38,14 @@ router.post('/', async(req, res) => {
         serviceDescription: req.body.serviceDescription,
         diagnosingFees: req.body.diagnosingFees,
         serviceFees: req.body.serviceFees,
-        provisionDate: req.body.provisionDate,
+        provisionDate: today.toLocaleDateString(undefined, options),
         timestamp: req.body.timestamp,
         paymentMethod: req.body.paymentMethod,
         responseTime: req.body.responseTime,
-        steps: req.body.responseTime
+        steps: req.body.responseTime,
+        city: req.body.city,
+        time: Math.round(today.getHours() / 24) + " hrs ago",
+        day: days[today.getDay()]
     })
     try {
         const newUser = await order.save()
@@ -44,7 +56,7 @@ router.post('/', async(req, res) => {
 })
 
 // Updating One
-router.patch('/:id', getOrder, async(req, res) => {
+router.patch('/:id', getOrder, async (req, res) => {
     if (req.body.name != null) {
         res.order.name = req.body.name
     }
@@ -58,7 +70,7 @@ router.patch('/:id', getOrder, async(req, res) => {
 })
 
 // Deleting One
-router.delete('/:id', getOrder, async(req, res) => {
+router.delete('/:id', getOrder, async (req, res) => {
     try {
         await res.order.remove()
         res.json({ message: 'Deleted order' })

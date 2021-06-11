@@ -17,169 +17,175 @@ router.get('/', cors(), async(req, res) => {
 
 })
 
+
 router.get('/login/auth', cors(), async(req, res) => {
+            router.post('/login/auth', cors(), async(req, res) => {
 
-    try {
-        let user;
-        if (Object.keys(req.body).length == 0) {
 
-            res.status(500).json({ message: "lost of required data" });
 
-        } else {
-            user = await User.find({
-                email: req.body.email,
-                password: req.body.password
-            });
-            if (Object.keys(user).length == 0) {
+                try {
+                    let user;
+                    console.log(req.body)
+                    if (Object.keys(req.body).length == 0) {
 
-                res.status(500).json({ message: "invalid email or password" });
-            } else {
-                res.status(200).json(user);
-            }
-        }
+                        res.status(500).json({ message: "lost of required data" });
 
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-})
+                    } else {
+                        user = await User.find({
+                            email: req.body.email,
+                            password: req.body.password
+                        });
+                        if (Object.keys(user).length == 0) {
 
-router.get('/signup/auth', cors(), async(req, res) => {
-    let user;
-    try {
+                            res.status(500).json({ message: "invalid email or password" });
+                        } else {
+                            res.status(200).json(user);
+                        }
+                    }
 
-        if (Object.keys(req.body).length == 0) {
-            res.status(500).json({ message: "lost of required data" });
-        } else {
-            user = await User.find({
-                email: req.body.email,
-            });
-        }
-        if (Object.keys(user).length == 0) {
-            user = new User({
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                name: req.body.fullname,
-                email: req.body.email,
-                password: req.body.password,
-                gender: req.body.gender,
-                phoneNumber: req.body.phoneNumber,
-                country: req.body.country,
-                city: req.body.city,
-                lag: req.body.lag,
-                lat: req.body.lat,
-                postalCode: req.body.postalCode,
-                token: req.body.token,
-                profileImgSrc: req.body.profileImgSrc,
-                displayLanguage: req.body.displayLanguage,
-                address: req.body.address,
-                //to be moved to its own api
-                notificationSettings: req.body.notificationSettings,
-                notificationList: req.body.notificationList,
-                //to be moved to its own api
-                favouriteServiceProviders: req.body.favouriteServiceProviders,
-                favouriteCategories: req.body.favouriteCategories,
+                } catch (err) {
+                    res.status(500).json({ message: err.message });
+                }
             })
-            user.save();
-            res.status(200).json(user);
-        } else {
 
-            res.status(500).json({ message: "email already exist" });
-        }
+            router.post('/signup/auth', cors(), async(req, res) => {
 
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
-})
+                try {
+                    let user;
 
-// Getting One
-router.get('/:id', getUser, (req, res) => {
-    res.json(res.user)
-})
+                    if (Object.keys(req.body).length == 0) {
+                        res.status(500).json({ message: "lost of required data" });
+                    } else {
+                        user = await User.find({
+                            email: req.body.email,
+                        });
+                    }
+                    if (Object.keys(user).length == 0) {
+                        user = new User({
+                            firstName: req.body.firstName,
+                            lastName: req.body.lastName,
+                            name: req.body.fullname,
+                            email: req.body.email,
+                            password: req.body.password,
+                            gender: req.body.gender,
+                            phoneNumber: req.body.phoneNumber,
+                            country: req.body.country,
+                            city: req.body.city,
+                            lag: req.body.lag,
+                            lat: req.body.lat,
+                            postalCode: req.body.postalCode,
+                            token: req.body.token,
+                            profileImgSrc: req.body.profileImgSrc,
+                            displayLanguage: req.body.displayLanguage,
+                            address: req.body.address,
+                            //to be moved to its own api
+                            notificationSettings: req.body.notificationSettings,
+                            notificationList: req.body.notificationList,
+                            //to be moved to its own api
+                            favouriteServiceProviders: req.body.favouriteServiceProviders,
+                            favouriteCategories: req.body.favouriteCategories,
+                        })
+                        user.save();
+                        res.status(200).json(user);
+                    } else {
 
-// Creating one
-router.post('/', async(req, res) => {
-    const user = new User({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
-        gender: req.body.gender,
-        phoneNumber: req.body.phoneNumber,
-        country: req.body.country,
-        city: req.body.city,
-        lag: req.body.lag,
-        lat: req.body.lat,
-        postalCode: req.body.postalCode,
-        token: req.body.token,
-        profileImgSrc: req.body.profileImgSrc,
-        displayLanguage: req.body.displayLanguage,
-        address: req.body.address,
-        //to be moved to its own api
-        notificationSettings: req.body.notificationSettings,
-        notificationList: req.body.notificationList,
-        //to be moved to its own api
-        favouriteServiceProviders: req.body.favouriteServiceProviders,
-        favouriteCategories: req.body.favouriteCategories,
-    })
-    try {
-        const newUser = await user.save()
-        res.status(201).json(newUser)
-    } catch (err) {
-        res.status(400).json({ message: err.message })
-    }
-})
+                        res.status(500).json({ message: "email already exist" });
+                    }
 
-// Updating One
-router.patch('/:id', getUser, async(req, res) => {
-    if (req.body.name != null) {
-        res.user.name = req.body.name
-    }
-
-    try {
-        const updatedUser = await res.user.save()
-        res.json(updatedUser)
-    } catch (err) {
-        res.status(400).json({ message: err.message })
-    }
-})
-
-// Deleting One
-router.delete('/:id', getUser, async(req, res) => {
-    try {
-        await res.user.remove()
-        res.json({ message: 'Deleted user' })
-    } catch (err) {
-        res.status(500).json({ message: err.message })
-    }
-})
-
-async function getUser(req, res, next) {
-    console.log("getting users")
-    console.log(req.params)
-    let user
-    try {
-        user = await User.find({
-            "_id": req.params.id
-        }, function(err, data) {
-            if (err) {
-                err.status = 406;
-                return next(err)
-            }
-            return res.status(201).json({
-                message: "sucess",
-                data: data
+                } catch (err) {
+                    res.status(500).json({ message: err.message });
+                }
             })
-        })
-        if (user == null) {
-            return res.status(404).json({ message: 'Cannot find user' })
-        }
-    } catch (err) {
-        return res.status(500).json({ message: err.message })
-    }
 
-    res.user = user
-    next()
-}
+            // Getting One
+            router.get('/:id', getUser, (req, res) => {
+                res.json(res.user)
+            })
 
-module.exports = router
+            // Creating one
+            router.post('/', async(req, res) => {
+                const user = new User({
+                    firstName: req.body.firstName,
+                    lastName: req.body.lastName,
+                    name: req.body.name,
+                    email: req.body.email,
+                    password: req.body.password,
+                    gender: req.body.gender,
+                    phoneNumber: req.body.phoneNumber,
+                    country: req.body.country,
+                    city: req.body.city,
+                    lag: req.body.lag,
+                    lat: req.body.lat,
+                    postalCode: req.body.postalCode,
+                    token: req.body.token,
+                    profileImgSrc: req.body.profileImgSrc,
+                    displayLanguage: req.body.displayLanguage,
+                    address: req.body.address,
+                    //to be moved to its own api
+                    notificationSettings: req.body.notificationSettings,
+                    notificationList: req.body.notificationList,
+                    //to be moved to its own api
+                    favouriteServiceProviders: req.body.favouriteServiceProviders,
+                    favouriteCategories: req.body.favouriteCategories,
+                })
+                try {
+                    const newUser = await user.save()
+                    res.status(201).json(newUser)
+                } catch (err) {
+                    res.status(400).json({ message: err.message })
+                }
+            })
+
+            // Updating One
+            router.patch('/:id', getUser, async(req, res) => {
+                if (req.body.name != null) {
+                    res.user.name = req.body.name
+                }
+
+                try {
+                    const updatedUser = await res.user.save()
+                    res.json(updatedUser)
+                } catch (err) {
+                    res.status(400).json({ message: err.message })
+                }
+            })
+
+            // Deleting One
+            router.delete('/:id', getUser, async(req, res) => {
+                try {
+                    await res.user.remove()
+                    res.json({ message: 'Deleted user' })
+                } catch (err) {
+                    res.status(500).json({ message: err.message })
+                }
+            })
+
+            async function getUser(req, res, next) {
+                console.log("getting users")
+                console.log(req.params)
+                let user
+                try {
+                    user = await User.find({
+                        "_id": req.params.id
+                    }, function(err, data) {
+                        if (err) {
+                            err.status = 406;
+                            return next(err)
+                        }
+                        return res.status(201).json({
+                            message: "sucess",
+                            data: data
+                        })
+                    })
+                    if (user == null) {
+                        return res.status(404).json({ message: 'Cannot find user' })
+                    }
+                } catch (err) {
+                    return res.status(500).json({ message: err.message })
+                }
+
+                res.user = user
+                next()
+            }
+
+            module.exports = router
