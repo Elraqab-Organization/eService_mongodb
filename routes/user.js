@@ -17,10 +17,11 @@ router.get('/', cors(), async (req, res) => {
 
 })
 
-router.get('/login/auth', cors(), async (req, res) => {
+router.post('/login/auth', cors(), async (req, res) => {
 
     try {
         let user;
+        console.log(req.body)
         if (Object.keys(req.body).length == 0) {
 
             res.status(500).json({ message: "lost of required data" });
