@@ -3,7 +3,7 @@ const router = express.Router()
 const User = require('../models/user')
 var cors = require('cors')
 
-router.get('/', cors(), async (req, res) => {
+router.get('/', cors(), async(req, res) => {
 
     try {
         let user;
@@ -17,7 +17,7 @@ router.get('/', cors(), async (req, res) => {
 
 })
 
-router.get('/login/auth', cors(), async (req, res) => {
+router.get('/login/auth', cors(), async(req, res) => {
 
     try {
         let user;
@@ -43,8 +43,8 @@ router.get('/login/auth', cors(), async (req, res) => {
     }
 })
 
-router.get('/signup/auth', cors(), async (req, res) => {
-
+router.get('/signup/auth', cors(), async(req, res) => {
+    let user;
     try {
 
         if (Object.keys(req.body).length == 0) {
@@ -97,7 +97,7 @@ router.get('/:id', getUser, (req, res) => {
 })
 
 // Creating one
-router.post('/', async (req, res) => {
+router.post('/', async(req, res) => {
     const user = new User({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -131,7 +131,7 @@ router.post('/', async (req, res) => {
 })
 
 // Updating One
-router.patch('/:id', getUser, async (req, res) => {
+router.patch('/:id', getUser, async(req, res) => {
     if (req.body.name != null) {
         res.user.name = req.body.name
     }
@@ -145,7 +145,7 @@ router.patch('/:id', getUser, async (req, res) => {
 })
 
 // Deleting One
-router.delete('/:id', getUser, async (req, res) => {
+router.delete('/:id', getUser, async(req, res) => {
     try {
         await res.user.remove()
         res.json({ message: 'Deleted user' })
@@ -161,7 +161,7 @@ async function getUser(req, res, next) {
     try {
         user = await User.find({
             "_id": req.params.id
-        }, function (err, data) {
+        }, function(err, data) {
             if (err) {
                 err.status = 406;
                 return next(err)
