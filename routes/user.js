@@ -44,7 +44,7 @@ router.post('/login/auth', cors(), async (req, res) => {
     }
 })
 
-router.get('/signup/auth', cors(), async (req, res) => {
+router.post('/signup/auth', cors(), async (req, res) => {
 
     try {
 
