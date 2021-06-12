@@ -4,8 +4,7 @@ const mongoose = require("mongoose");
 var cors = require("cors");
 
 mongoose.connect(
-  "mongodb+srv://ahmadelraqab:123123258Aa@cluster0.whjky.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
-  { useNewUrlParser: true, useUnifiedTopology: true }
+    "mongodb+srv://ahmadelraqab:123123258Aa@cluster0.whjky.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
 const db = mongoose.connection;
@@ -26,5 +25,5 @@ app.use("/users", usersRouter);
 app.use("/orders", ordersRouter);
 app.use("/posts", postsRouter);
 
-app.listen(process.env.PORT || 5000, () => console.log("Server Started"));
-// app.listen(3000, () => console.log("Server Started"));
+// app.listen(process.env.PORT || 5000, () => console.log("Server Started"));
+app.listen(3000, () => console.log("Server Started"));

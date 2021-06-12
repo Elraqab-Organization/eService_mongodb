@@ -47,10 +47,11 @@ router.post('/login/auth', cors(), async(req, res) => {
 router.post('/signup/auth', cors(), async(req, res) => {
 
     try {
-
+        let user;
         if (Object.keys(req.body).length == 0) {
             res.status(500).json({ message: "lost of required data" });
         } else {
+
             user = await User.find({
                 email: req.body.email,
             });
@@ -59,7 +60,7 @@ router.post('/signup/auth', cors(), async(req, res) => {
             user = new User({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                name: req.body.fullname,
+                name: req.body.name,
                 email: req.body.email,
                 password: req.body.password,
                 gender: req.body.gender,
@@ -80,15 +81,14 @@ router.post('/signup/auth', cors(), async(req, res) => {
                 favouriteServiceProviders: req.body.favouriteServiceProviders,
                 favouriteCategories: req.body.favouriteCategories,
             })
-            user.save();
             res.status(200).json(user);
+            user.save();
         } else {
-
             res.status(500).json({ message: "email already exist" });
         }
 
     } catch (err) {
-        res.status(500).json({ message: err.message });
+        res.status(500).json({ message: "flow is not right" });
     }
 })
 
