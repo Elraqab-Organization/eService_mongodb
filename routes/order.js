@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Order = require('../models/orders');
 var cors = require('cors')
+const userSchema = require("../models/user");
 
 // Getting all
 router.post('/', cors(), async (req, res) => {
@@ -31,6 +32,7 @@ router.post('/create', async (req, res) => {
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     const order = new Order({
         customerId: req.body.customerId,
+        serviceProvider: await userSchema.findById(req.body.customerId, 'name profileImgSrc'),
         serviceProviderId: req.body.serviceProviderId,
         postId: req.body.postId,
         status: req.body.status,
@@ -45,7 +47,9 @@ router.post('/create', async (req, res) => {
         steps: req.body.responseTime,
         city: req.body.city,
         time: Math.round(today.getHours() / 24) + " hrs ago",
-        day: days[today.getDay()]
+        day: days[today.getDay()],
+        type: req.body.type,
+        name: req.body.name
     })
     try {
         const newUser = await order.save()

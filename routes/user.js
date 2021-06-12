@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const User = require('../models/user')
+const ServiceProvider = require('../models/service_provider')
 var cors = require('cors')
 
 router.get('/', cors(), async (req, res) => {
@@ -122,6 +123,17 @@ router.post('/', async (req, res) => {
         //to be moved to its own api
         favouriteServiceProviders: req.body.favouriteServiceProviders,
         favouriteCategories: req.body.favouriteCategories,
+    })
+    try {
+        const newUser = await user.save()
+        res.status(201).json(newUser)
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+})
+router.post('/service-provider/create', async (req, res) => {
+    const user = new ServiceProvider({
+        // add attributes
     })
     try {
         const newUser = await user.save()
