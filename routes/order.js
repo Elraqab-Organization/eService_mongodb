@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Order = require('../models/orders');
 var cors = require('cors')
+const userSchema = require("../models/user");
 
 // Getting all
 router.post('/', cors(), async (req, res) => {
@@ -27,10 +28,11 @@ router.get('/:id', getOrder, (req, res) => {
 // Creating one
 router.post('/create', async (req, res) => {
     const today = new Date()
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     const order = new Order({
         customerId: req.body.customerId,
+        customer: await userSchema.findById(req.body.customerId, 'name profileImgSrc'),
         serviceProviderId: req.body.serviceProviderId,
         postId: req.body.postId,
         status: req.body.status,
@@ -39,13 +41,15 @@ router.post('/create', async (req, res) => {
         diagnosingFees: req.body.diagnosingFees,
         serviceFees: req.body.serviceFees,
         provisionDate: today.toLocaleDateString(undefined, options),
-        timestamp: req.body.timestamp,
+        timestamp: Date.now(),
         paymentMethod: req.body.paymentMethod,
-        responseTime: req.body.responseTime,
+        responseTime: Date.now(),
         steps: req.body.responseTime,
         city: req.body.city,
         time: Math.round(today.getHours() / 24) + " hrs ago",
-        day: days[today.getDay()]
+        day: days[today.getDay()],
+        type: req.body.type,
+        name: req.body.name
     })
     try {
         const newUser = await order.save()

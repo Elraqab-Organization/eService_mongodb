@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const feedbackSchema = require("./feedback");
+const userSchema = require("./user");
 
 const ordersSchema = new mongoose.Schema({
 
@@ -7,6 +8,16 @@ const ordersSchema = new mongoose.Schema({
         type: String,
         default: "",
         required: true,
+    },
+    user: {
+        type: userSchema,
+        required: true,
+        default: {}
+    },
+    customer: {
+        type: userSchema,
+        required: true,
+        default: {}
     },
     serviceProviderId: {
         type: String,
