@@ -14,7 +14,7 @@ const ordersSchema = new mongoose.Schema({
         required: true,
         default: {}
     },
-    serviceProvider: {
+    customer: {
         type: userSchema,
         required: true,
         default: {}

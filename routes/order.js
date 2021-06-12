@@ -28,11 +28,11 @@ router.get('/:id', getOrder, (req, res) => {
 // Creating one
 router.post('/create', async (req, res) => {
     const today = new Date()
-    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
     const order = new Order({
         customerId: req.body.customerId,
-        serviceProvider: await userSchema.findById(req.body.customerId, 'name profileImgSrc'),
+        customer: await userSchema.findById(req.body.customerId, 'name profileImgSrc'),
         serviceProviderId: req.body.serviceProviderId,
         postId: req.body.postId,
         status: req.body.status,
@@ -41,9 +41,9 @@ router.post('/create', async (req, res) => {
         diagnosingFees: req.body.diagnosingFees,
         serviceFees: req.body.serviceFees,
         provisionDate: today.toLocaleDateString(undefined, options),
-        timestamp: req.body.timestamp,
+        timestamp: Date.now(),
         paymentMethod: req.body.paymentMethod,
-        responseTime: req.body.responseTime,
+        responseTime: Date.now(),
         steps: req.body.responseTime,
         city: req.body.city,
         time: Math.round(today.getHours() / 24) + " hrs ago",
