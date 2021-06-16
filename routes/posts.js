@@ -25,20 +25,28 @@ router.get("/", async (req, res) => {
 
 // tested successful
 router.post("/", async (req, res) => {
-  const description = req.body.description;
-  const cancelationFee = req.body.cancelationFee;
-  const tag = req.body.tags;
+  const {
+    customerId,
+    location,
+    paymentMethod,
+    cancelationFee,
+    tags,
+    description,
+  } = req.body;
 
-  const post = new Post({
-    description: description,
+  const newPost = new Post({
+    customerId: customerId,
+    location: location,
+    paymentMethod: paymentMethod,
     cancelationFee: cancelationFee,
-    tag: tag,
+    tags: tags,
+    description: description,
   });
 
   // pass to function to save object
-  await post.save(function (err, result) {
-    if (err) console.log(err);
-    else res.json(result);
+  await newPost.save(function (err, result) {
+    if (err) res.status(409).json({ message: error.message });
+    else res.status(201).json(newPost);
   });
 });
 
