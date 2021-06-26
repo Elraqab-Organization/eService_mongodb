@@ -32,6 +32,15 @@ router.get("/:_id", async (req, res) => {
   });
 });
 
+router.post("/:_id", async (req, res) => {
+  const { _id } = req.params;
+  const post = await Post.findById(_id);
+  post.proposal.push(req.body);
+
+  const updatedPost = await Post.findByIdAndUpdate(_id, post, { new: true });
+  res.json(updatedPost);
+});
+
 // tested successful
 router.post("/", async (req, res) => {
   const {

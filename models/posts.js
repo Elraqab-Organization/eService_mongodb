@@ -10,7 +10,6 @@ const postSchema = new mongoose.Schema({
   tags: [String],
   proposal: [
     {
-      proposalId: { type: String },
       diagnosisFee: { type: String },
       paymentMethod: { type: String },
       serviceProviderId: { type: String },
