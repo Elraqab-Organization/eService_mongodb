@@ -15,6 +15,7 @@ const postSchema = new mongoose.Schema({
       serviceProviderId: { type: String },
       description: { type: String },
       steps: [String],
+      status: { type: Boolean, default: false },
     },
   ],
 });
