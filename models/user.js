@@ -1,74 +1,96 @@
 const mongoose = require('mongoose');
 const ordersSchema = require("./orders")
 const userSchema = new mongoose.Schema({
-    firstName: String,
-    lastName: String,
-
-    name: String,
+    id: {
+        type: String,
+        default: null,
+    },
+    firstName: {
+        type: String,
+        default: null,
+    },
+    lastName: {
+        type: String,
+        default: null,
+    },
+    imgSrc: {
+        type: String,
+        default: null,
+    },
     email: {
         type: String,
-        required: true
+        default: null,
     },
     password: {
         type: String,
-        required: true
+        default: null,
     },
-    gender: String,
-    phoneNumber: Number,
-    country: String,
-    city: String,
-    lag: Number,
-    lat: Number,
-    postalCode: String,
-    token: String,
-    profileImgSrc: String,
-    displayLanguage: String,
-    address: [{
-            name: String,
-            description: String,
-            lug: Number,
-            lat: Number,
-            default: {}
-        },
-
-    ],
-    paymentMethod: [{
-
-        name: String,
-        active: Boolean,
+    gender: {
         type: String,
-        card: [{
-            name: String,
-            cardNumber: Number,
-            expiryMonth: Number,
-            expiryYear: Number,
-            primary: Boolean
-        }]
-
-    }],
-    //to be moved to its own api
-    notificationSettings: {
-        showNotification: Boolean,
-        allowNotificationDot: Boolean,
-        excutivePrograms: Boolean,
-        discountsAnddeals: Boolean,
+        default: null,
     },
-    notificationList: {
-        type: Array,
-        default: []
+    city: {
+        type: String,
+        default: null,
     },
-    //to be moved to its own api
-    favouriteServiceProviders: {
-        type: Array,
-        default: []
+    country: {
+        type: String,
+        default: null,
     },
-    favouriteCategories: {
-        type: Array,
-        default: []
+    phoneNumber: {
+        type: String,
+        default: null,
     },
-    // ordersList: [ordersSchema],
-
-
+    postalCode: {
+        type: String,
+        default: null,
+    },
+    long: {
+        type: String,
+        default: null,
+    },
+    lat: {
+        type: String,
+        default: null,
+    },
+    displayLanguage: {
+        type: String,
+        default: null,
+    },
+    token: {
+        type: String,
+        default: null,
+    },
+    isServiceProvider: {
+        type: Boolean,
+        default: null,
+    },
+    isCashPaymentActive: {
+        type: Boolean,
+        default: null,
+    },
+    jobName: {
+        type: String,
+        default: "customer",
+    },
+    notification: {
+        showNotificatoin: {
+            type: Boolean,
+            default: null,
+        },
+        allowNotificationDot: {
+            type: Boolean,
+            default: null,
+        },
+        excutivePrograms: {
+            type: Boolean,
+            default: null,
+        },
+        discountsDeals: {
+            type: Boolean,
+            default: null,
+        }
+    },
 });
 
 module.exports = mongoose.model('User', userSchema);

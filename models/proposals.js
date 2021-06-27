@@ -1,12 +1,35 @@
 const mongoose = require('mongoose');
 
-const proposalsSchema = new mongoose.Schema({
-    id: String,
-    serviceProviderId: String,
-    description: String,
-    steps: [],
-    fees: Number,
+const proposalSchema = new mongoose.Schema({
+    id: {
+        type: String,
+        default: ""
+    },
+    post: "",
+    customer: "",
+    serviceProvider: "",
+    postId: "",
+    customerId: "",
+    status: {
+        type: String,
+        default: "Pending",
+        required: true
+    },
+    serviceProviderId: "",
+    description: {
+        type: String,
+        default: ""
+    },
+    steps: [{ type: String, default: "" },],
+    provisionDate: {
+        type: String,
+        default: ""
+    },
+    time: {
+        type: String,
+        default: ""
+    },
 
 });
 
-module.exports = mongoose.model('proposals', proposalsSchema);
+module.exports = mongoose.model('Proposal', proposalSchema);

@@ -20,11 +20,15 @@ const subscribersRouter = require("./routes/subscribers");
 const usersRouter = require("./routes/user");
 const ordersRouter = require("./routes/order");
 const postsRouter = require("./routes/posts");
+const proposalsRouter = require("./routes/proposal");
+const requestsRouter = require("./routes/request");
 
 app.use("/subscribers", subscribersRouter);
 app.use("/users", usersRouter);
 app.use("/orders", ordersRouter);
 app.use("/posts", postsRouter);
+app.use("/proposals", proposalsRouter);
+app.use("/requests", requestsRouter);
 
 app.listen(process.env.PORT || 5000, () => console.log("Server Started"));
 // app.listen(3000, () => console.log("Server Started"));
