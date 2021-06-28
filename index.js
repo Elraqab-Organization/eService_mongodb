@@ -12,8 +12,8 @@ db.on("error", (error) => console.error(error));
 db.once("open", () => console.log("Connected to Database"));
 
 app.use(express.json());
-app.options("*", cors());
 app.use(cors());
+app.options("*", cors());
 
 const subscribersRouter = require("./routes/subscribers");
 const usersRouter = require("./routes/user");
