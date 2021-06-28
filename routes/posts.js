@@ -3,51 +3,50 @@ const router = express.Router();
 
 const Post = require("../models/posts");
 
-router.get("/", async (req, res) => {
-  // tested successfully
-  await Post.find({}, function (err, result) {
-    if (err) console.log(err);
-    else res.json(result);
-  });
+router.get("/", async(req, res) => {
+    // tested successfully
+    await Post.find({}, function(err, result) {
+        if (err) console.log(err);
+        else res.json(result);
+    });
 
-  // const post = new Post({
-  //   customerId: "custome1ID",
-  //   description: "lorem lorem lorem lorem",
-  //   cancelationFee: 10.0,
-  //   tag: ["Electrical", "Plumber", "House Cleaning"],
-  // });
+    // const post = new Post({
+    //   customerId: "custome1ID",
+    //   description: "lorem lorem lorem lorem",
+    //   cancelationFee: 10.0,
+    //   tag: ["Electrical", "Plumber", "House Cleaning"],
+    // });
 
-  // await post.save(function (err, result) {
-  //   if (err) console.log(err);
-  //   else res.json(result);
-  // });
+    // await post.save(function (err, result) {
+    //   if (err) console.log(err);
+    //   else res.json(result);
+    // });
 });
 
 // tested successful
-router.post("/", async (req, res) => {
-  const description = req.body.description;
-  const cancelationFee = req.body.cancelationFee;
-  const tag = req.body.tags;
+router.post("/", async(req, res) => {
 
-  const post = new Post({
-    description: description,
-    cancelationFee: cancelationFee,
-    tag: tag,
-  });
 
-  // pass to function to save object
-  await post.save(function (err, result) {
-    if (err) console.log(err);
-    else res.json(result);
-  });
+    const shortCut = req.body;
+    const post = new Post({
+        description: shortCut.description,
+        cancelationFee: shortCut.cancelationFee,
+        tag: shortCut.tag,
+    });
+
+    // pass to function to save object
+    await post.save(function(err, result) {
+        if (err) console.log(err);
+        else res.json(result);
+    });
 });
 
 // tested
-router.delete("/:id", async (req, res) => {
-  await Post.findByIdAndRemove({ _id: req.params.id }, function (err, result) {
-    if (err) console.log(err);
-    else res.json(result);
-  });
+router.delete("/:id", async(req, res) => {
+    await Post.findByIdAndRemove({ _id: req.params.id }, function(err, result) {
+        if (err) console.log(err);
+        else res.json(result);
+    });
 });
 
 module.exports = router;
