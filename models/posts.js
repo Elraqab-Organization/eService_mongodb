@@ -10,11 +10,12 @@ const postSchema = new mongoose.Schema({
   tags: [String],
   proposal: [
     {
-      proposalId: { type: String },
-      postId: String,
+      diagnosisFee: { type: String },
+      paymentMethod: { type: String },
       serviceProviderId: { type: String },
       description: { type: String },
       steps: [String],
+      status: { type: Boolean, default: false },
     },
   ],
 });
