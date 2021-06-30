@@ -61,9 +61,9 @@ router.patch('/:id', getRequest, async (req, res) => {
     try {
         const updatedRequest = await res.request.save()
 
-        if (req.body.status === "accepted") {
-            res.redirect("/orders/create", { type: 'request', data: request })
-        }
+        // if (req.body.status === "accepted") {
+        //     res.redirect("/orders/create", { type: 'request', data: request })
+        // }
         res.json(updatedRequest)
     } catch (err) {
         res.status(400).json({ message: err.message })
