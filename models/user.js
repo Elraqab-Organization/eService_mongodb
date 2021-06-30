@@ -29,6 +29,18 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null,
     },
+    jobDescription: {
+        type: String,
+        default: null,
+    },
+    rate: {
+        type: Number,
+        default: null,
+    },
+    diagnosingFees: {
+        type: Number,
+        default: null,
+    },
     city: {
         type: String,
         default: null,

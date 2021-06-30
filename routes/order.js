@@ -26,32 +26,35 @@ router.get('/:id', cors(), async (req, res) => {
 
 // creates new order by passing all required attributes
 router.post('/create', async (req, res) => {
-    const today = new Date()
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    const order = new Order({
-        id: req.body.id,
-        customerId: req.body.customerId,
-        serviceProviderId: req.body.serviceProviderId,
-        customer: await userSchema.findById(req.body.customerId, 'name profileImgSrc'),
-        serviceProvider: await userSchema.findById(req.body.serviceProviderId, 'name profileImgSrc'),
-        postId: req.body.id,
-        feedbackId: req.body.id,
-        status: req.body.status,
-        problemDescription: req.body.problemDescription,
-        paymentMethod: req.body.paymentMethod,
-        diagnosingFees: req.body.diagnosingFees,
-        serviceDescription: req.body.serviceDescription,
-        steps: req.body.steps,
-        serviceFees: req.body.serviceFees,
-        provisionDate: today.toLocaleDateString(undefined, options),
-        responseTime: Math.round(today.getHours() / 24) + " hrs ago",
-    })
-    try {
-        const newUser = await order.save()
-        res.status(201).json(newUser)
-    } catch (err) {
-        res.status(400).json({ message: err.message })
-    }
+    // const today = new Date()
+    // const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    // const order = new Order({
+    //     id: req.body.id,
+    //     customerId: req.body.customerId,
+    //     serviceProviderId: req.body.serviceProviderId,
+    //     customer: await userSchema.findById(req.body.customerId, 'name profileImgSrc'),
+    //     serviceProvider: await userSchema.findById(req.body.serviceProviderId, 'name profileImgSrc'),
+    //     postId: req.body.id,
+    //     feedbackId: req.body.id,
+    //     status: req.body.status,
+    //     problemDescription: req.body.problemDescription,
+    //     paymentMethod: req.body.paymentMethod,
+    //     serviceFees: req.body.serviceFees,
+    //     steps: req.body.steps,
+    //     serviceDescription: req.body.serviceDescription,
+    //     diagnosingFees: req.body.diagnosingFees,
+    //     provisionDate: today.toLocaleDateString(undefined, options),
+    //     responseTime: Math.round(today.getHours() / 24) + " hrs ago",
+    // })
+    // try {
+    //     const newUser = await order.save()
+    //     res.status(201).json(newUser)
+    // } catch (err) {
+    //     res.status(400).json({ message: err.message })
+    // }
+
+    console.log(req.data);
+    console.log(req.type);
 })
 
 // send order id and new status

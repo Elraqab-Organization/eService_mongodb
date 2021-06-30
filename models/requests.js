@@ -18,6 +18,10 @@ const requestSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    payment: {
+        type: String,
+        default: ""
+    },
     description: {
         type: String,
         default: ""
@@ -34,9 +38,11 @@ const requestSchema = new mongoose.Schema({
     customer: "",
     serviceProvider: "",
     provisionDate: {
+        type: String,
         default: ""
     },
     time: {
+        type: String,
         default: ""
     },
 })

@@ -87,6 +87,9 @@ router.post('/signup/auth', cors(), async (req, res) => {
                 isServiceProvider: req.body.isServiceProvider,
                 isCashPaymentActive: req.body.isCashPaymentActive,
                 jobName: req.body.jobName,
+                jobDescription: req.body.jobDescription,
+                rate: req.body.rate,
+                diagnosingFees: req.body.diagnosingFees,
                 notification: {
                     showNotificatoin: req.body.showNotificatoin,
                     allowNotificationDot: req.body.allowNotificationDot,

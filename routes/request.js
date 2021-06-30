@@ -1,4 +1,5 @@
-var cors = require('cors')
+var cors = require('cors');
+const { request } = require('express');
 const express = require('express')
 const router = express.Router()
 const Request = require("../models/requests");
@@ -35,9 +36,10 @@ router.post('/create', async (req, res) => {
         serviceProviderId: req.body.serviceProviderId,
         description: req.body.description,
         fees: req.body.fees,
+        payment: req.body.payment,
         location: req.body.location,
-        customer: await User.findById(req.body.customerId, 'name profileImgSrc'),
-        serviceProvider: await User.findById(req.body.serviceProviderId, 'name profileImgSrc'),
+        customer: await User.findById(req.body.customerId, 'firstName lastName imgSrc'),
+        serviceProvider: await User.findById(req.body.serviceProviderId, 'firstName lastName imgSrc'),
         provisionDate: today.toLocaleDateString(undefined, options),
         time: Math.round(today.getHours() / 24) + " hrs ago",
     })
@@ -58,6 +60,10 @@ router.patch('/:id', getRequest, async (req, res) => {
     }
     try {
         const updatedRequest = await res.request.save()
+
+        if (req.body.status === "accepted") {
+            res.redirect("/orders/create", { type: 'request', data: request })
+        }
         res.json(updatedRequest)
     } catch (err) {
         res.status(400).json({ message: err.message })
