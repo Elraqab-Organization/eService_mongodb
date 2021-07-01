@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 
 const Post = require("../models/posts");
+const Proposal = require("../models/proposals");
+const User = require("../models/user");
 
 router.get("/", async (req, res) => {
   // tested successfully
@@ -33,12 +35,56 @@ router.get("/:_id", async (req, res) => {
 });
 
 router.post("/:_id", async (req, res) => {
-  const { _id } = req.params;
-  const post = await Post.findById(_id);
-  post.proposal.push(req.body);
+  //
+  const { _id } = req.params; // postId for the post selected.
 
-  const updatedPost = await Post.findByIdAndUpdate(_id, post, { new: true });
-  res.json(updatedPost);
+  // 1. create a proposal Object with data coming from proposalInfo object
+  const { serviceProviderId, diagnosisFee, paymentMethod, description, steps } =
+    req.body;
+
+  // Date formatter options
+  const today = new Date();
+  const options = { year: "numeric", month: "long", day: "numeric" };
+
+  // Post information Unzip to get all information
+  const { customerId } = await Post.findById(_id, "customerId");
+
+  // proposal Object
+  const proposal = new Proposal({
+    postId: _id,
+    customerId: customerId,
+    serviceProviderId: serviceProviderId,
+    description: description,
+    steps: steps,
+    diagnosisFee: diagnosisFee,
+    post: await Post.findById(_id, "location paymentMethod description"),
+    customer: await User.findById(customerId, "firstName lastName imgSrc"),
+    serviceProvider: await User.findById(
+      serviceProviderId,
+      "firstName lastName imgSrc"
+    ),
+    provisionDate: today.toLocaleDateString(undefined, options),
+  });
+
+  try {
+    // 2. imagesUrl for the service Provider and display them in the post attachment
+
+    const post = await Post.findById(_id);
+
+    // get image source for post attachment when displayed
+    const { imgSrc } = await User.findById(customerId, "imgSrc");
+    post.proposal.push(imgSrc);
+
+    await Post.findByIdAndUpdate(_id, post, { new: true });
+
+    const newProposal = await proposal.save();
+    res.status(201).json(newProposal);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+
+  // 3. creat a order, and notification object from the infromation of both
+  //     post and proposal Info
 });
 
 // tested successful
