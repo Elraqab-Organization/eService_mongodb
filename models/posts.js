@@ -8,16 +8,7 @@ const postSchema = new mongoose.Schema({
   paymentMethod: { type: String, required: true },
   cancelationFee: { type: String, required: true },
   tags: [String],
-  proposal: [
-    {
-      diagnosisFee: { type: String },
-      paymentMethod: { type: String },
-      serviceProviderId: { type: String },
-      description: { type: String },
-      steps: [String],
-      status: { type: Boolean, default: false },
-    },
-  ],
+  proposal: [String],
 });
 
 module.exports = mongoose.model("Post", postSchema);
