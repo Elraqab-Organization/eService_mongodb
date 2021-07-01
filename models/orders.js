@@ -2,22 +2,28 @@ const mongoose = require('mongoose');
 const feedbackSchema = require("./feedback");
 const userSchema = require("./user");
 
+
 const ordersSchema = new mongoose.Schema({
 
-    customerId: {
+    id: {
         type: String,
         default: "",
         required: true,
-    },
-    user: {
-        type: userSchema,
-        required: true,
-        default: {}
     },
     customer: {
         type: userSchema,
         required: true,
         default: {}
+    },
+    serviceProvider: {
+        type: userSchema,
+        required: true,
+        default: {}
+    },
+    customerId: {
+        type: String,
+        default: "",
+        required: true,
     },
     serviceProviderId: {
         type: String,
@@ -27,6 +33,10 @@ const ordersSchema = new mongoose.Schema({
     postId: {
         type: String,
         default: "",
+    },
+    feedbackId: {
+        type: String,
+        default: "",
         required: true,
     },
     status: {
@@ -34,7 +44,7 @@ const ordersSchema = new mongoose.Schema({
         default: "",
         required: true,
     },
-    problemDiscription: {
+    problemDescription: {
         type: String,
         default: "",
         required: true,
@@ -54,38 +64,26 @@ const ordersSchema = new mongoose.Schema({
         default: "",
         required: true,
     },
-    provisionDate: {
+    paymentMethod: {
         type: String,
+        default: "",
         required: true,
     },
-    timestamp: {
-        type: Date,
-        default: Date.now(),
+    provisionDate: {
+        type: String,
+        default: "",
         required: true,
     },
     responseTime: {
-        type: Date,
-        default: Date.now(),
+        type: String,
+        default: "",
         required: true,
     },
-    // feedback:
-    steps: [],
-    city: {
-        type: String,
-        default: "",
-        required: true
-    },
-    time: {
-        type: String,
-        default: "",
-        required: true
-    },
-    day: {
-        type: String,
-        default: "",
-        required: true
+    steps: {
+        type: [String],
+        default: [],
+        required: true,
     }
-
 });
 
 module.exports = mongoose.model('Order', ordersSchema)

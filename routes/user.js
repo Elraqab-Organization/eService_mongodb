@@ -4,7 +4,7 @@ const User = require('../models/user')
 const ServiceProvider = require('../models/service_provider')
 var cors = require('cors')
 
-router.get('/', cors(), async(req, res) => {
+router.get('/', cors(), async (req, res) => {
 
     try {
         let user;
@@ -17,12 +17,23 @@ router.get('/', cors(), async(req, res) => {
     }
 
 })
-
-router.post('/login/auth', cors(), async(req, res) => {
+router.get('/categories', cors(), async (req, res) => {
 
     try {
         let user;
-        console.log(req.body)
+        user = await User.find({ isServiceProvider: true });
+        res.status(201).json(user);
+
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+
+})
+router.post('/login/auth', cors(), async (req, res) => {
+
+    try {
+        let user;
         if (Object.keys(req.body).length == 0) {
 
             res.status(500).json({ message: "lost of required data" });
@@ -45,7 +56,7 @@ router.post('/login/auth', cors(), async(req, res) => {
     }
 })
 
-router.post('/signup/auth', cors(), async(req, res) => {
+router.post('/signup/auth', cors(), async (req, res) => {
 
     try {
         let user;
@@ -59,28 +70,37 @@ router.post('/signup/auth', cors(), async(req, res) => {
         }
         if (Object.keys(user).length == 0) {
             user = new User({
+                id: req.body.id,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
+<<<<<<< HEAD
                 name: req.body.name,
+=======
+                imgSrc: req.body.imgSrc,
+>>>>>>> 501e27b977d60dcd0ed05a5379a5b0319eaabde4
                 email: req.body.email,
                 password: req.body.password,
                 gender: req.body.gender,
-                phoneNumber: req.body.phoneNumber,
-                country: req.body.country,
                 city: req.body.city,
-                lag: req.body.lag,
-                lat: req.body.lat,
+                country: req.body.country,
+                phoneNumber: req.body.phoneNumber,
                 postalCode: req.body.postalCode,
-                token: req.body.token,
-                profileImgSrc: req.body.profileImgSrc,
+                long: req.body.long,
+                lat: req.body.lat,
                 displayLanguage: req.body.displayLanguage,
-                address: req.body.address,
-                //to be moved to its own api
-                notificationSettings: req.body.notificationSettings,
-                notificationList: req.body.notificationList,
-                //to be moved to its own api
-                favouriteServiceProviders: req.body.favouriteServiceProviders,
-                favouriteCategories: req.body.favouriteCategories,
+                token: req.body.token,
+                isServiceProvider: req.body.isServiceProvider,
+                isCashPaymentActive: req.body.isCashPaymentActive,
+                jobName: req.body.jobName,
+                jobDescription: req.body.jobDescription,
+                rate: req.body.rate,
+                diagnosingFees: req.body.diagnosingFees,
+                notification: {
+                    showNotificatoin: req.body.showNotificatoin,
+                    allowNotificationDot: req.body.allowNotificationDot,
+                    excutivePrograms: req.body.excutivePrograms,
+                    discountsDeals: req.body.discountsDeals
+                },
             })
             res.status(200).json(user);
             user.save();
@@ -99,30 +119,31 @@ router.get('/:id', getUser, (req, res) => {
 })
 
 // Creating one
-router.post('/', async(req, res) => {
-    const user = new User({
+router.post('/', async (req, res) => {
+    user = new User({
+        id: req.body.id,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        name: req.body.name,
+        imgSrc: req.body.imgSrc,
         email: req.body.email,
         password: req.body.password,
         gender: req.body.gender,
-        phoneNumber: req.body.phoneNumber,
-        country: req.body.country,
         city: req.body.city,
-        lag: req.body.lag,
-        lat: req.body.lat,
+        country: req.body.country,
+        phoneNumber: req.body.phoneNumber,
         postalCode: req.body.postalCode,
-        token: req.body.token,
-        profileImgSrc: req.body.profileImgSrc,
+        long: req.body.long,
+        lat: req.body.lat,
         displayLanguage: req.body.displayLanguage,
-        address: req.body.address,
-        //to be moved to its own api
-        notificationSettings: req.body.notificationSettings,
-        notificationList: req.body.notificationList,
-        //to be moved to its own api
-        favouriteServiceProviders: req.body.favouriteServiceProviders,
-        favouriteCategories: req.body.favouriteCategories,
+        token: req.body.token,
+        isServiceProvider: req.body.isServiceProvider,
+        isCashPaymentActive: req.body.isCashPaymentActive,
+        notification: {
+            showNotificatoin: req.body.showNotificatoin,
+            allowNotificationDot: req.body.allowNotificationDot,
+            excutivePrograms: req.body.excutivePrograms,
+            discountsDeals: req.body.discountsDeals
+        },
     })
     try {
         const newUser = await user.save()
@@ -144,9 +165,9 @@ router.post('/service-provider/create', async (req, res) => {
 })
 
 // Updating One
-router.patch('/:id', getUser, async(req, res) => {
-    if (req.body.name != null) {
-        res.user.name = req.body.name
+router.patch('/:id', getUser, async (req, res) => {
+    if (req.body.id != null) {
+        res.user.id = req.body.id
     }
 
     try {
@@ -158,7 +179,7 @@ router.patch('/:id', getUser, async(req, res) => {
 })
 
 // Deleting One
-router.delete('/:id', getUser, async(req, res) => {
+router.delete('/:id', getUser, async (req, res) => {
     try {
         await res.user.remove()
         res.json({ message: 'Deleted user' })
@@ -168,13 +189,11 @@ router.delete('/:id', getUser, async(req, res) => {
 })
 
 async function getUser(req, res, next) {
-    console.log("getting users")
-    console.log(req.params)
     let user
     try {
         user = await User.find({
             "_id": req.params.id
-        }, function(err, data) {
+        }, function (err, data) {
             if (err) {
                 err.status = 406;
                 return next(err)
