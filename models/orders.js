@@ -5,11 +5,6 @@ const userSchema = require("./user");
 
 const ordersSchema = new mongoose.Schema({
 
-    id: {
-        type: String,
-        default: "",
-        required: true,
-    },
     customer: {
         type: userSchema,
         required: true,
@@ -54,11 +49,6 @@ const ordersSchema = new mongoose.Schema({
         default: "",
         required: true,
     },
-    diagnosingFees: {
-        type: Number,
-        default: "",
-        required: true,
-    },
     serviceFees: {
         type: Number,
         default: "",
@@ -83,6 +73,11 @@ const ordersSchema = new mongoose.Schema({
         type: [String],
         default: [],
         required: true,
+    },
+    location: {
+        type: String,
+        default: "",
+        required: true
     }
 });
 

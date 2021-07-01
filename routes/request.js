@@ -4,15 +4,19 @@ const express = require('express')
 const router = express.Router()
 const Request = require("../models/requests");
 const User = require("../models/user");
+const Order = require('../models/orders');
+
 
 // gets all request for customer or service provider
-router.get('/:id', cors(), async (req, res) => {
+router.get('/', cors(), async (req, res) => {
     try {
 
+        console.log(req.query.type);
+        console.log(req.query.id);
         let request;
-        req.body.isServiceProvider ?
-            request = await Request.find({ serviceProviderId: req.params.id }) :
-            request = await Request.find({ customerId: req.params.id })
+        req.query.type === "true" ?
+            request = await Request.find({ serviceProviderId: req.query.id }) :
+            request = await Request.find({ customerId: req.query.id })
 
         if (request.length != 0) {
 
@@ -61,10 +65,32 @@ router.patch('/:id', getRequest, async (req, res) => {
     try {
         const updatedRequest = await res.request.save()
 
-        // if (req.body.status === "accepted") {
-        //     res.redirect("/orders/create", { type: 'request', data: request })
-        // }
-        res.json(updatedRequest)
+        if (req.body.status === "Accepted") {
+            const today = new Date()
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const order = new Order({
+                customerId: res.request.customerId,
+                serviceProviderId: res.request.serviceProviderId,
+                customer: await User.findById(res.request.customerId, 'firstName lastName imgSrc'),
+                serviceProvider: await User.findById(res.request.serviceProviderId, 'firstName lastName imgSrc diagnosingFees'),
+                status: res.request.status,
+                problemDescription: res.request.description,
+                paymentMethod: res.request.payment,
+                serviceFees: res.request.fees,
+                location: res.request.location,
+                feedbackId: "none",
+                serviceDescription: "none",
+                provisionDate: today.toLocaleDateString(undefined, options),
+                responseTime: Math.round(today.getHours() / 24) + " hrs ago",
+            })
+            try {
+                const newUser = await order.save()
+                res.status(201).json(newUser)
+            } catch (err) {
+                res.status(400).json({ message: err.message })
+            }
+        }
+        // res.json(updatedRequest)
     } catch (err) {
         res.status(400).json({ message: err.message })
     }

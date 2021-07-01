@@ -25,7 +25,8 @@ router.get('/:id', cors(), async (req, res) => {
 })
 
 // creates new order by passing all required attributes
-router.post('/create', async (req, res) => {
+router.post('/create', cors(),async (req, res) => {
+    console.log("GG");
     // const today = new Date()
     // const options = { year: 'numeric', month: 'long', day: 'numeric' };
     // const order = new Order({
@@ -53,8 +54,8 @@ router.post('/create', async (req, res) => {
     //     res.status(400).json({ message: err.message })
     // }
 
-    console.log(req.data);
-    console.log(req.type);
+    console.log(req.query.type);
+    console.log(req.query.request);
 })
 
 // send order id and new status
