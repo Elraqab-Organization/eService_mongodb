@@ -6,18 +6,26 @@ const Post = require("../models/posts");
 const User = require("../models/user");
 
 // gets all proposal for customer or service provider
-router.get("/:id&:isServiceProvider", cors(), async (req, res) => {
-  // try {
-  //   let proposal;
-  //   req.params.isServiceProvider
-  //     ? (proposal = await Proposal.find({ serviceProviderId: req.params.id }))
-  //     : (proposal = await Proposal.find({ customerId: req.params.id }));
-  //   if (proposal.length != 0) {
-  //     res.json(proposal);
-  //   } else res.json({ message: "No proposal was found" });
-  // } catch (err) {
-  //   res.status(500).json({ message: err.message });
-  // }
+router.get("/:id/:isServiceProvider", cors(), async (req, res) => {
+  try {
+    const { id, isServiceProvider } = req.params;
+
+    var proposal;
+
+    if (isServiceProvider === "true") {
+      proposal = await Proposal.find({
+        serviceProviderId: id,
+      });
+    } else {
+      proposal = await Proposal.find({ customerId: id });
+    }
+
+    if (proposal.length != 0) {
+      res.json(proposal);
+    } else res.json({ message: "No proposal was found" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 // creates new proposal by passing all required attributes
