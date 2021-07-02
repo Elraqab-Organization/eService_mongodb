@@ -95,6 +95,7 @@ router.post("/", async (req, res) => {
     paymentMethod,
     cancelationFee,
     tags,
+    imgSrc,
     description,
   } = req.body;
 
@@ -104,6 +105,7 @@ router.post("/", async (req, res) => {
     paymentMethod: paymentMethod,
     cancelationFee: cancelationFee,
     tags: tags,
+    imgSrc: imgSrc,
     description: description,
   });
 
