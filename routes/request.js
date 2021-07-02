@@ -23,10 +23,10 @@ router.get('/', cors(), async (req, res) => {
             res.json(request)
         }
         else
-            res.json({ message: "No request was found" })
+            res.json("No request was found")
 
     } catch (err) {
-        res.status(500).json({ message: err.message })
+        res.status(500).json("No request was found")
     }
 })
 
