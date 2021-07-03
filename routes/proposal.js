@@ -5,6 +5,7 @@ const Proposal = require("../models/proposals");
 const Post = require("../models/posts");
 const User = require("../models/user");
 const mongoose = require("mongoose");
+const Order = require("../models/orders");
 
 // gets all proposal for customer or service provider
 router.get("/:id/:isServiceProvider", cors(), async (req, res) => {
@@ -80,15 +81,52 @@ router.post("/create", async (req, res) => {
 });
 
 // send proposal id and new status
-router.patch("/:id", getProposal, async (req, res) => {
-  if (req.params.id != null) {
-    // accept, reject, pend
-    res.proposal.status = req.body.status;
-  }
+router.patch("/:id/accept", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id))
+    return res.status(404).send(`No proposal with id: ${req.params.id}`);
+
+  const updatedProposal = await Proposal.findByIdAndUpdate(
+    req.params.id,
+    { status: "Accepted" },
+    { new: true }
+  );
+
+  const selectedProposal = Proposal.findById(req.params.id);
+
+  // login info
+  // console.log(SelectedProposal);
+  const newOrder = new Order({
+    customer: selectedProposal.customer,
+    serviceProvider: selectedProposal.serviceProvider,
+    customerId: selectedProposal.customerId,
+    serviceProviderId: selectedProposal.serviceProviderId,
+    problemDescription: selectedProposal.description,
+    postId: selectedProposal.postId,
+    serviceFee: selectedProposal.diagnosisFee,
+    timestamp: Date.now(),
+    provisionDate: selectedProposal.provisionDate,
+  });
+
   try {
-    const updatedProposal = await res.proposal.save();
-    res.json(updatedProposal);
-  } catch (err) {
+    res.status(201).json(updatedProposal);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// send proposal id and new status
+router.patch("/:id/reject", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id))
+    return res.status(404).send(`No proposal with id: ${req.params.id}`);
+
+  const updatedProposal = await Proposal.findByIdAndUpdate(
+    req.params.id,
+    { status: "rejected" },
+    { new: true }
+  );
+  try {
+    res.status(201).json(updatedProposal);
+  } catch (error) {
     res.status(400).json({ message: err.message });
   }
 });
