@@ -4,6 +4,7 @@ const router = express.Router();
 const Post = require("../models/posts");
 const Proposal = require("../models/proposals");
 const User = require("../models/user");
+const mongoose = require("mongoose");
 
 router.get("/", async (req, res) => {
   // tested successfully
@@ -118,30 +119,13 @@ router.post("/", async (req, res) => {
 
 // tested
 router.delete("/:id", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id))
+    return res.status(404).send(`No post with id: ${req.params.id}`);
+
   await Post.findByIdAndRemove({ _id: req.params.id }, function (err, result) {
-    if (err) console.log(err);
-    else res.json(result);
+    if (err) res.status(409).json({ message: error.message });
+    else res.status(201).json(result);
   });
 });
 
 module.exports = router;
-
-// experipmental data
-
-// const post = new Post({
-//     _id: "post3ID",
-//     customerId: "custome1ID",
-//     description: "lorem lorem lorem lorem",
-//     cancelationFee: 10.0,
-//     tag: ["Electrical", "Plumber", "House Cleaning"],
-//     proposal: [
-//       {
-//         proposalId: "proposal1ID",
-//         postId: "post3ID",
-//         serviceProviderId: "serviceprovider1ID",
-//         description:
-//           "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem",
-//         steps: ["step1", "step2", "step3"],
-//       },
-//     ],
-//   });
