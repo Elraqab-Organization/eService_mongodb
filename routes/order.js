@@ -5,19 +5,19 @@ var cors = require('cors')
 const userSchema = require("../models/user");
 
 // gets all orders for customer or service provider
-router.get('/:id', cors(), async (req, res) => {
+router.get('/', cors(), async (req, res) => {
     try {
         let orders;
-        req.body.isServiceProvider ?
-            orders = await Order.find({ serviceProviderId: req.params.id }) :
-            orders = await Order.find({ customerId: req.params.id })
+        req.query.type === "true" ?
+            orders = await Order.find({ serviceProviderId: req.query.id }) :
+            orders = await Order.find({ customerId: req.query.id })
 
         if (orders.length != 0) {
-
+            console.log(orders);
             res.json(orders)
         }
         else
-            res.json({ message: "No orders was found" })
+            res.json("No orders was found")
 
     } catch (err) {
         res.status(500).json({ message: err.message })
@@ -25,7 +25,7 @@ router.get('/:id', cors(), async (req, res) => {
 })
 
 // creates new order by passing all required attributes
-router.post('/create', cors(),async (req, res) => {
+router.post('/create', cors(), async (req, res) => {
     console.log("GG");
     // const today = new Date()
     // const options = { year: 'numeric', month: 'long', day: 'numeric' };
