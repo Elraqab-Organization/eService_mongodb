@@ -7,6 +7,7 @@ const postSchema = new mongoose.Schema({
   location: { type: String, required: true },
   paymentMethod: { type: String, required: true },
   cancelationFee: { type: String, required: true },
+  imgSrc: { type: String, default: "" },
   tags: [String],
   proposal: [String],
 });

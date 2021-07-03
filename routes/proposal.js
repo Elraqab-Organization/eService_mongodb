@@ -6,12 +6,19 @@ const Post = require("../models/posts");
 const User = require("../models/user");
 
 // gets all proposal for customer or service provider
-router.get("/:id", cors(), async (req, res) => {
+router.get("/:id/:isServiceProvider", cors(), async (req, res) => {
   try {
-    let proposal;
-    req.body.isServiceProvider
-      ? (proposal = await Proposal.find({ serviceProviderId: req.params.id }))
-      : (proposal = await Proposal.find({ customerId: req.params.id }));
+    const { id, isServiceProvider } = req.params;
+
+    var proposal;
+
+    if (isServiceProvider === "true") {
+      proposal = await Proposal.find({
+        serviceProviderId: id,
+      });
+    } else {
+      proposal = await Proposal.find({ customerId: id });
+    }
 
     if (proposal.length != 0) {
       res.json(proposal);

@@ -72,7 +72,7 @@ router.post("/:_id", async (req, res) => {
     const post = await Post.findById(_id);
 
     // get image source for post attachment when displayed
-    const { imgSrc } = await User.findById(customerId, "imgSrc");
+    const { imgSrc } = await User.findById(serviceProviderId, "imgSrc");
     post.proposal.push(imgSrc);
 
     await Post.findByIdAndUpdate(_id, post, { new: true });
@@ -95,6 +95,7 @@ router.post("/", async (req, res) => {
     paymentMethod,
     cancelationFee,
     tags,
+    imgSrc,
     description,
   } = req.body;
 
@@ -104,6 +105,7 @@ router.post("/", async (req, res) => {
     paymentMethod: paymentMethod,
     cancelationFee: cancelationFee,
     tags: tags,
+    imgSrc: imgSrc,
     description: description,
   });
 
