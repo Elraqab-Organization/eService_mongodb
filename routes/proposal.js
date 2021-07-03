@@ -4,6 +4,7 @@ const router = express.Router();
 const Proposal = require("../models/proposals");
 const Post = require("../models/posts");
 const User = require("../models/user");
+const mongoose = require("mongoose");
 
 // gets all proposal for customer or service provider
 router.get("/:id/:isServiceProvider", cors(), async (req, res) => {
@@ -23,6 +24,26 @@ router.get("/:id/:isServiceProvider", cors(), async (req, res) => {
     if (proposal.length != 0) {
       res.json(proposal);
     } else res.json({ message: "No proposal was found" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// gets all proposal for customer or service provider
+router.get("/:id", cors(), async (req, res) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id))
+      return res.status(404).send(`No post with id: ${req.params.id}`);
+
+    //
+    const { id } = req.params;
+    const proposal = await Proposal.find({
+      postId: id,
+    });
+
+    if (proposal.length != 0) {
+      res.json(proposal);
+    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
