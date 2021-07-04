@@ -39,16 +39,12 @@ router.patch('/:id', getOrder, async (req, res) => {
 })
 router.patch('/add_feedback/:id', getOrder, async (req, res) => {
 
-    let feedback
-    let rate
-
     if (req.body != null) {
-        res.order.feedback.feedback = req.body.feedback
-        res.order.feedback.rate = req.body.rate
-        res.order.feedback.isFeedbackGiven = true
+        res.order.feedback = req.body.feedback
+        res.order.rate = req.body.rate
+        res.order.isFeedbackGiven = true
     }
     try {
-        console.log(res.order)
         const updatedOrder = await res.order.save()
         res.json(updatedOrder)
     } catch (err) {
