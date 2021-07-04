@@ -10,6 +10,11 @@ const ordersSchema = new mongoose.Schema({
         required: true,
         default: {}
     },
+    feedback: {
+        type: Object,
+        required: true,
+        default: {}
+    },
     serviceProvider: {
         type: userSchema,
         required: true,
@@ -78,7 +83,8 @@ const ordersSchema = new mongoose.Schema({
         type: String,
         default: "",
         required: true
-    }
+    },
+
 });
 
 module.exports = mongoose.model('Order', ordersSchema)

@@ -22,6 +22,7 @@ const ordersRouter = require("./routes/order");
 const postsRouter = require("./routes/posts");
 const proposalsRouter = require("./routes/proposal");
 const requestsRouter = require("./routes/request");
+const feedbackRouter = require("./routes/feedback");
 
 app.use("/subscribers", subscribersRouter);
 app.use("/users", usersRouter);
@@ -29,6 +30,7 @@ app.use("/orders", ordersRouter);
 app.use("/posts", postsRouter);
 app.use("/proposals", proposalsRouter);
 app.use("/requests", requestsRouter);
+app.use("/feedback", feedbackRouter);
 
 app.listen(process.env.PORT || 5000, () => console.log("Server Started"));
 // app.listen(3000, () => console.log("Server Started"));

@@ -5,6 +5,7 @@ const router = express.Router()
 const Request = require("../models/requests");
 const User = require("../models/user");
 const Order = require('../models/orders');
+const Feedback = require('../models/feedback');
 
 
 // gets all request for customer or service provider
@@ -82,6 +83,7 @@ router.patch('/:id', getRequest, async (req, res) => {
                 serviceDescription: "none",
                 provisionDate: today.toLocaleDateString(undefined, options),
                 responseTime: Math.round(today.getHours() / 24) + " hrs ago",
+                feedback: new Feedback({})
             })
             try {
                 const newUser = await order.save()
