@@ -45,7 +45,7 @@ router.patch('/add_feedback/:id', getOrder, async (req, res) => {
     if (req.body != null) {
         res.order.feedback.feedback = req.body.feedback
         res.order.feedback.rate = req.body.rate
-        res.order.feedback.isGiven = true
+        res.order.feedback.isFeedbackGiven = true
     }
     try {
         console.log(res.order)

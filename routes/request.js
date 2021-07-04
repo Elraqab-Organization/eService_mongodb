@@ -83,7 +83,9 @@ router.patch('/:id', getRequest, async (req, res) => {
                 serviceDescription: "none",
                 provisionDate: today.toLocaleDateString(undefined, options),
                 responseTime: Math.round(today.getHours() / 24) + " hrs ago",
-                feedback: new Feedback({})
+                feedback: "",
+                rate: 1,
+                isFeedbackGiven: false,
             })
             try {
                 const newUser = await order.save()

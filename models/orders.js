@@ -10,15 +10,22 @@ const ordersSchema = new mongoose.Schema({
         required: true,
         default: {}
     },
-    feedback: {
-        type: Object,
-        required: true,
-        default: {}
-    },
     serviceProvider: {
         type: userSchema,
         required: true,
         default: {}
+    },
+    feedback: {
+        type: String,
+        default: "",
+    },
+    rate: {
+        type: Number,
+        default: 1,
+    },
+    isFeedbackGiven: {
+        type: Boolean,
+        default: false,
     },
     customerId: {
         type: String,
