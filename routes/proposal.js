@@ -8,13 +8,13 @@ const mongoose = require("mongoose");
 const Order = require("../models/orders");
 
 // gets all proposal for customer or service provider
-router.get("/:id/:isServiceProvider", cors(), async (req, res) => {
+router.get("/:id/:type", cors(), async (req, res) => {
   try {
-    const { id, isServiceProvider } = req.params;
+    const { id, type } = req.params;
 
     var proposal;
 
-    if (isServiceProvider === "true") {
+    if (type) {
       proposal = await Proposal.find({
         serviceProviderId: id,
       });
