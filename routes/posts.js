@@ -89,23 +89,6 @@ router.post("/:_id", async (req, res) => {
 });
 
 // tested successful
-<<<<<<< HEAD
-router.post("/", async(req, res) => {
-
-
-    const shortCut = req.body;
-    const post = new Post({
-        description: shortCut.description,
-        cancelationFee: shortCut.cancelationFee,
-        tag: shortCut.tag,
-    });
-
-    // pass to function to save object
-    await post.save(function(err, result) {
-        if (err) console.log(err);
-        else res.json(result);
-    });
-=======
 router.post("/", async (req, res) => {
   const {
     customerId,
@@ -132,40 +115,9 @@ router.post("/", async (req, res) => {
     if (err) res.status(409).json({ message: error.message });
     else res.status(201).json(newPost);
   });
->>>>>>> 61a217a1037a4d1a70e6bbed712a460e1fe65158
 });
 
 // tested
-<<<<<<< HEAD
-router.delete("/:id", async(req, res) => {
-    await Post.findByIdAndRemove({ _id: req.params.id }, function(err, result) {
-        if (err) console.log(err);
-        else res.json(result);
-    });
-});
-
-module.exports = router;
-
-// experipmental data
-
-// const post = new Post({
-//     _id: "post3ID",
-//     customerId: "custome1ID",
-//     description: "lorem lorem lorem lorem",
-//     cancelationFee: 10.0,
-//     tag: ["Electrical", "Plumber", "House Cleaning"],
-//     proposal: [
-//       {
-//         proposalId: "proposal1ID",
-//         postId: "post3ID",
-//         serviceProviderId: "serviceprovider1ID",
-//         description:
-//           "lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem",
-//         steps: ["step1", "step2", "step3"],
-//       },
-//     ],
-//   });
-=======
 router.delete("/:id", async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id))
     return res.status(404).send(`No post with id: ${req.params.id}`);
@@ -177,4 +129,3 @@ router.delete("/:id", async (req, res) => {
 });
 
 module.exports = router;
->>>>>>> 4655748c4ed45524ce18443d73e2704a57a802f6

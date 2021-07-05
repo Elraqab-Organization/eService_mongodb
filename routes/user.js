@@ -30,6 +30,25 @@ router.get('/categories', cors(), async (req, res) => {
     }
 
 })
+
+
+
+
+router.get('/serviceprovider', cors(), async (req, res) => {
+
+    try {
+        let user;
+
+        user = await User.find({ isServiceProvider: true, firstName: { $regex: '.*' + req.query.firstName + '.*' }, lastName: { $regex: '.*' + req.query.lastName + '.*' } });
+        
+        res.status(201).json(user);
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+
+})
+
 router.post('/login/auth', cors(), async (req, res) => {
 
     try {
@@ -73,11 +92,7 @@ router.post('/signup/auth', cors(), async (req, res) => {
                 id: req.body.id,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-<<<<<<< HEAD
-                name: req.body.name,
-=======
                 imgSrc: req.body.imgSrc,
->>>>>>> 501e27b977d60dcd0ed05a5379a5b0319eaabde4
                 email: req.body.email,
                 password: req.body.password,
                 gender: req.body.gender,
