@@ -138,6 +138,22 @@ router.patch("/:id/reject", async (req, res) => {
   }
 });
 
+router.patch("/:id/cancel", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id))
+    return res.status(404).send(`No proposal with id: ${req.params.id}`);
+
+  const updatedProposal = await Proposal.findByIdAndUpdate(
+    req.params.id,
+    { status: "canceled" },
+    { new: true }
+  );
+  try {
+    res.status(201).json(updatedProposal);
+  } catch (error) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
 // finds proposal by id
 async function getProposal(req, res, next) {
   let proposal;
