@@ -4,18 +4,47 @@ const router = express.Router();
 const Proposal = require("../models/proposals");
 const Post = require("../models/posts");
 const User = require("../models/user");
+const mongoose = require("mongoose");
+const Order = require("../models/orders");
 
 // gets all proposal for customer or service provider
-router.get("/:id", cors(), async (req, res) => {
+router.get("/:id/:type", cors(), async (req, res) => {
   try {
-    let proposal;
-    req.body.isServiceProvider
-      ? (proposal = await Proposal.find({ serviceProviderId: req.params.id }))
-      : (proposal = await Proposal.find({ customerId: req.params.id }));
+    const { id, type } = req.params;
+
+    var proposal;
+
+    if (type) {
+      proposal = await Proposal.find({
+        serviceProviderId: id,
+      });
+    } else {
+      proposal = await Proposal.find({ customerId: id });
+    }
 
     if (proposal.length != 0) {
       res.json(proposal);
     } else res.json({ message: "No proposal was found" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// gets all proposal for customer or service provider
+router.get("/:id", cors(), async (req, res) => {
+  try {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id))
+      return res.status(404).send(`No post with id: ${req.params.id}`);
+
+    //
+    const { id } = req.params;
+    const proposal = await Proposal.find({
+      postId: id,
+    });
+
+    if (proposal.length != 0) {
+      res.json(proposal);
+    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -52,15 +81,75 @@ router.post("/create", async (req, res) => {
 });
 
 // send proposal id and new status
-router.patch("/:id", getProposal, async (req, res) => {
-  if (req.params.id != null) {
-    // accept, reject, pend
-    res.proposal.status = req.body.status;
-  }
+router.patch("/:id/accept", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id))
+    return res.status(404).send(`No proposal with id: ${req.params.id}`);
+
+  const updatedProposal = await Proposal.findByIdAndUpdate(
+    req.params.id,
+    { status: "Accepted" },
+    { new: true }
+  );
+
   try {
-    const updatedProposal = await res.proposal.save();
-    res.json(updatedProposal);
-  } catch (err) {
+    //
+    const today = new Date();
+    const options = { year: "numeric", month: "long", day: "numeric" };
+
+    const newOrder = new Order({
+      customer: updatedProposal.customer,
+      serviceProvider: updatedProposal.serviceProvider,
+      customerId: updatedProposal.customerId,
+      serviceProviderId: updatedProposal.serviceProviderId,
+      problemDescription: updatedProposal.description,
+      postId: updatedProposal.postId,
+      serviceFees: updatedProposal.diagnosisFee,
+      steps: updatedProposal.steps,
+      provisionDate: today.toLocaleDateString(undefined, options),
+      status: updatedProposal.status,
+      serviceDescription: updatedProposal.description,
+      paymentMethod: updatedProposal.post.paymentMethod,
+      responseTime: Math.round(today.getHours() / 24) + " hrs ago",
+      location: updatedProposal.post.location,
+      isFeedbackGiven: false,
+    });
+
+    await newOrder.save();
+    res.status(201).json(updatedProposal);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+// send proposal id and new status
+router.patch("/:id/reject", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id))
+    return res.status(404).send(`No proposal with id: ${req.params.id}`);
+
+  const updatedProposal = await Proposal.findByIdAndUpdate(
+    req.params.id,
+    { status: "rejected" },
+    { new: true }
+  );
+  try {
+    res.status(201).json(updatedProposal);
+  } catch (error) {
+    res.status(400).json({ message: err.message });
+  }
+});
+
+router.patch("/:id/cancel", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id))
+    return res.status(404).send(`No proposal with id: ${req.params.id}`);
+
+  const updatedProposal = await Proposal.findByIdAndUpdate(
+    req.params.id,
+    { status: "canceled" },
+    { new: true }
+  );
+  try {
+    res.status(201).json(updatedProposal);
+  } catch (error) {
     res.status(400).json({ message: err.message });
   }
 });

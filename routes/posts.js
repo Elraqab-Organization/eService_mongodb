@@ -4,6 +4,7 @@ const router = express.Router();
 const Post = require("../models/posts");
 const Proposal = require("../models/proposals");
 const User = require("../models/user");
+const mongoose = require("mongoose");
 
 router.get("/", async(req, res) => {
     // tested successfully
@@ -72,7 +73,7 @@ router.post("/:_id", async (req, res) => {
     const post = await Post.findById(_id);
 
     // get image source for post attachment when displayed
-    const { imgSrc } = await User.findById(customerId, "imgSrc");
+    const { imgSrc } = await User.findById(serviceProviderId, "imgSrc");
     post.proposal.push(imgSrc);
 
     await Post.findByIdAndUpdate(_id, post, { new: true });
@@ -112,6 +113,7 @@ router.post("/", async (req, res) => {
     paymentMethod,
     cancelationFee,
     tags,
+    imgSrc,
     description,
   } = req.body;
 
@@ -121,6 +123,7 @@ router.post("/", async (req, res) => {
     paymentMethod: paymentMethod,
     cancelationFee: cancelationFee,
     tags: tags,
+    imgSrc: imgSrc,
     description: description,
   });
 
@@ -133,6 +136,7 @@ router.post("/", async (req, res) => {
 });
 
 // tested
+<<<<<<< HEAD
 router.delete("/:id", async(req, res) => {
     await Post.findByIdAndRemove({ _id: req.params.id }, function(err, result) {
         if (err) console.log(err);
@@ -161,3 +165,16 @@ module.exports = router;
 //       },
 //     ],
 //   });
+=======
+router.delete("/:id", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id))
+    return res.status(404).send(`No post with id: ${req.params.id}`);
+
+  await Post.findByIdAndRemove({ _id: req.params.id }, function (err, result) {
+    if (err) res.status(409).json({ message: error.message });
+    else res.status(201).json(result);
+  });
+});
+
+module.exports = router;
+>>>>>>> 4655748c4ed45524ce18443d73e2704a57a802f6
