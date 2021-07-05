@@ -91,23 +91,30 @@ router.patch("/:id/accept", async (req, res) => {
     { new: true }
   );
 
-  const selectedProposal = Proposal.findById(req.params.id);
-
-  // login info
-  // console.log(SelectedProposal);
-  const newOrder = new Order({
-    customer: selectedProposal.customer,
-    serviceProvider: selectedProposal.serviceProvider,
-    customerId: selectedProposal.customerId,
-    serviceProviderId: selectedProposal.serviceProviderId,
-    problemDescription: selectedProposal.description,
-    postId: selectedProposal.postId,
-    serviceFee: selectedProposal.diagnosisFee,
-    timestamp: Date.now(),
-    provisionDate: selectedProposal.provisionDate,
-  });
-
   try {
+    //
+    const today = new Date();
+    const options = { year: "numeric", month: "long", day: "numeric" };
+
+    const newOrder = new Order({
+      customer: updatedProposal.customer,
+      serviceProvider: updatedProposal.serviceProvider,
+      customerId: updatedProposal.customerId,
+      serviceProviderId: updatedProposal.serviceProviderId,
+      problemDescription: updatedProposal.description,
+      postId: updatedProposal.postId,
+      serviceFees: updatedProposal.diagnosisFee,
+      steps: updatedProposal.steps,
+      provisionDate: today.toLocaleDateString(undefined, options),
+      status: updatedProposal.status,
+      serviceDescription: updatedProposal.description,
+      paymentMethod: updatedProposal.post.paymentMethod,
+      responseTime: Math.round(today.getHours() / 24) + " hrs ago",
+      location: updatedProposal.post.location,
+      isFeedbackGiven: false,
+    });
+
+    await newOrder.save();
     res.status(201).json(updatedProposal);
   } catch (error) {
     res.status(400).json({ message: error.message });
