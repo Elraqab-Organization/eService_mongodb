@@ -79,7 +79,7 @@ router.patch("/:id", getRequest, async (req, res) => {
           res.request.serviceProviderId,
           "firstName lastName imgSrc diagnosingFees"
         ),
-        status: res.request.status,
+        status: "Ingoing",
         problemDescription: res.request.description,
         paymentMethod: res.request.payment,
         serviceFees: res.request.fees,
