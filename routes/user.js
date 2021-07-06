@@ -36,11 +36,13 @@ router.get('/categories', cors(), async (req, res) => {
 
 router.get('/serviceprovider', cors(), async (req, res) => {
 
+    console.log(req.query)
     try {
         let user;
 
-        user = await User.find({ isServiceProvider: true, firstName: { $regex: '.*' + req.query.firstName + '.*' }, lastName: { $regex: '.*' + req.query.lastName + '.*' } });
-        
+        // user = await User.find({ isServiceProvider: true,fullName:req.query.fullName });
+        user = await User.find({ $and: [{ isServiceProvider: true }, { fullName:req.query.fullName }] })
+            
         res.status(201).json(user);
 
     } catch (err) {
@@ -88,10 +90,13 @@ router.post('/signup/auth', cors(), async (req, res) => {
             });
         }
         if (Object.keys(user).length == 0) {
+
+            console.log((req.body.firstName+req.body.lastName))
             user = new User({
                 id: req.body.id,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
+                fullName:req.body.firstName + req.body.lastName,
                 imgSrc: req.body.imgSrc,
                 email: req.body.email,
                 password: req.body.password,
@@ -135,10 +140,13 @@ router.get('/:id', getUser, (req, res) => {
 
 // Creating one
 router.post('/', async (req, res) => {
+
+
     user = new User({
         id: req.body.id,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
+        fullName:req.body.firstName + req.body.lastName,
         imgSrc: req.body.imgSrc,
         email: req.body.email,
         password: req.body.password,

@@ -13,6 +13,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: null,
     },
+    fullName: {
+        type: String,
+        default: null,
+    },
     imgSrc: {
         type: String,
         default: null,
