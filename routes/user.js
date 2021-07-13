@@ -41,8 +41,8 @@ router.get('/serviceprovider', cors(), async (req, res) => {
         let user;
 
         // user = await User.find({ isServiceProvider: true,fullName:req.query.fullName });
-        user = await User.find({ $and: [{ isServiceProvider: true }, { fullName:req.query.fullName }] })
-            
+        user = await User.find({ $and: [{ isServiceProvider: true }, { fullName: req.query.fullName }] })
+
         res.status(201).json(user);
 
     } catch (err) {
@@ -55,6 +55,7 @@ router.post('/login/auth', cors(), async (req, res) => {
 
     try {
         let user;
+
         if (Object.keys(req.body).length == 0) {
 
             res.status(500).json({ message: "lost of required data" });
@@ -66,7 +67,7 @@ router.post('/login/auth', cors(), async (req, res) => {
             });
             if (Object.keys(user).length == 0) {
 
-                res.status(500).json({ message: "invalid email or password" });
+                res.status(500).json(null);
             } else {
                 res.status(200).json(user);
             }
@@ -91,12 +92,12 @@ router.post('/signup/auth', cors(), async (req, res) => {
         }
         if (Object.keys(user).length == 0) {
 
-            console.log((req.body.firstName+req.body.lastName))
+            console.log((req.body.firstName + req.body.lastName))
             user = new User({
                 id: req.body.id,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                fullName:req.body.firstName + req.body.lastName,
+                fullName: req.body.firstName + req.body.lastName,
                 imgSrc: req.body.imgSrc,
                 email: req.body.email,
                 password: req.body.password,
@@ -146,7 +147,7 @@ router.post('/', async (req, res) => {
         id: req.body.id,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        fullName:req.body.firstName + req.body.lastName,
+        fullName: req.body.firstName + req.body.lastName,
         imgSrc: req.body.imgSrc,
         email: req.body.email,
         password: req.body.password,
