@@ -126,7 +126,7 @@ router.post('/signup/auth', cors(), async (req, res) => {
             res.status(200).json(user);
             user.save();
         } else {
-            res.status(500).json({ message: "email already exist" });
+            res.status(500).json(null);
         }
 
     } catch (err) {
