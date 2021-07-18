@@ -89,6 +89,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "customer",
     },
+    address: {
+        type: Array,
+        default: [],
+    },
     notification: {
         showNotificatoin: {
             type: Boolean,

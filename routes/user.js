@@ -92,7 +92,6 @@ router.post('/signup/auth', cors(), async (req, res) => {
         }
         if (Object.keys(user).length == 0) {
 
-            console.log((req.body.firstName + req.body.lastName))
             user = new User({
                 id: req.body.id,
                 firstName: req.body.firstName,
@@ -116,6 +115,7 @@ router.post('/signup/auth', cors(), async (req, res) => {
                 jobDescription: req.body.jobDescription,
                 rate: req.body.rate,
                 diagnosingFees: req.body.diagnosingFees,
+                address: [],
                 notification: {
                     showNotificatoin: req.body.showNotificatoin,
                     allowNotificationDot: req.body.allowNotificationDot,
@@ -123,6 +123,7 @@ router.post('/signup/auth', cors(), async (req, res) => {
                     discountsDeals: req.body.discountsDeals
                 },
             })
+
             res.status(200).json(user);
             user.save();
         } else {
