@@ -6,24 +6,24 @@ const Proposal = require("../models/proposals");
 const User = require("../models/user");
 const mongoose = require("mongoose");
 
-router.get("/", async(req, res) => {
-    // tested successfully
-    await Post.find({}, function(err, result) {
-        if (err) console.log(err);
-        else res.json(result);
-    });
+router.get("/", async (req, res) => {
+  // tested successfully
+  await Post.find({}, function (err, result) {
+    if (err) console.log(err);
+    else res.json(result);
+  });
 
-    // const post = new Post({
-    //   customerId: "custome1ID",
-    //   description: "lorem lorem lorem lorem",
-    //   cancelationFee: 10.0,
-    //   tag: ["Electrical", "Plumber", "House Cleaning"],
-    // });
+  // const post = new Post({
+  //   customerId: "custome1ID",
+  //   description: "lorem lorem lorem lorem",
+  //   cancelationFee: 10.0,
+  //   tag: ["Electrical", "Plumber", "House Cleaning"],
+  // });
 
-    // await post.save(function (err, result) {
-    //   if (err) console.log(err);
-    //   else res.json(result);
-    // });
+  // await post.save(function (err, result) {
+  //   if (err) console.log(err);
+  //   else res.json(result);
+  // });
 });
 
 router.get("/:_id", async (req, res) => {
@@ -40,8 +40,7 @@ router.post("/:_id", async (req, res) => {
   const { _id } = req.params; // postId for the post selected.
 
   // 1. create a proposal Object with data coming from proposalInfo object
-  const { serviceProviderId, diagnosisFee, paymentMethod, description, steps } =
-    req.body;
+  const { serviceProviderId, diagnosisFee, description, steps } = req.body;
 
   // Date formatter options
   const today = new Date();
@@ -98,6 +97,7 @@ router.post("/", async (req, res) => {
     tags,
     imgSrc,
     description,
+    username,
   } = req.body;
 
   const newPost = new Post({
@@ -108,6 +108,7 @@ router.post("/", async (req, res) => {
     tags: tags,
     imgSrc: imgSrc,
     description: description,
+    username: username,
   });
 
   // pass to function to save object

@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 var cors = require("cors");
 
 mongoose.connect(
-    "mongodb+srv://ahmadelraqab:123123258Aa@cluster0.whjky.mongodb.net/myFirstDatabase?retryWrites=true&w=majority", { useNewUrlParser: true, useUnifiedTopology: true }
+  "mongodb+srv://ahmadelraqab:123123258Aa@cluster0.whjky.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+  { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
 const db = mongoose.connection;
