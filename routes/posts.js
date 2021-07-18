@@ -40,8 +40,7 @@ router.post("/:_id", async (req, res) => {
   const { _id } = req.params; // postId for the post selected.
 
   // 1. create a proposal Object with data coming from proposalInfo object
-  const { serviceProviderId, diagnosisFee, paymentMethod, description, steps } =
-    req.body;
+  const { serviceProviderId, diagnosisFee, description, steps } = req.body;
 
   // Date formatter options
   const today = new Date();
