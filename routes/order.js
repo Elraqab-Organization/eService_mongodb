@@ -17,10 +17,10 @@ router.get('/', cors(), async (req, res) => {
             res.json(orders)
         }
         else
-            res.json("No orders was found")
+            res.json(null)
 
     } catch (err) {
-        res.status(500).json({ message: err.message })
+        res.status(500).json(null)
     }
 })
 
