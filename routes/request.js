@@ -52,7 +52,7 @@ router.post("/create", async (req, res) => {
     const newUser = await request.save();
     res.status(201).json(newUser);
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json(null);
   }
 });
 
