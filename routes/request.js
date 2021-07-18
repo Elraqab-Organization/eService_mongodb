@@ -19,9 +19,9 @@ router.get("/", cors(), async (req, res) => {
 
     if (request.length != 0) {
       res.json(request);
-    } else res.json("No request was found");
+    } else res.json(null);
   } catch (err) {
-    res.status(500).json("No request was found");
+    res.status(500).json(null);
   }
 });
 
