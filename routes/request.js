@@ -96,12 +96,12 @@ router.patch("/:id", getRequest, async (req, res) => {
         const newUser = await order.save();
         res.status(201).json(newUser);
       } catch (err) {
-        res.status(400).json({ message: err.message });
+        res.status(400).json(null);
       }
     }
     // res.json(updatedRequest)
   } catch (err) {
-    res.status(400).json({ message: err.message });
+    res.status(400).json(null);
   }
 });
 

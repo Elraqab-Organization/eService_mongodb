@@ -34,7 +34,7 @@ router.patch('/:id', getOrder, async (req, res) => {
         const updatedOrder = await res.order.save()
         res.json(updatedOrder)
     } catch (err) {
-        res.status(400).json({ message: err.message })
+        res.status(400).json(null)
     }
 })
 router.patch('/add_feedback/:id', getOrder, async (req, res) => {
@@ -48,7 +48,7 @@ router.patch('/add_feedback/:id', getOrder, async (req, res) => {
         const updatedOrder = await res.order.save()
         res.json(updatedOrder)
     } catch (err) {
-        res.status(400).json({ message: err.message })
+        res.status(400).json(null)
     }
 })
 
