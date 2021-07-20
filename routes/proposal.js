@@ -7,24 +7,23 @@ const User = require("../models/user");
 const mongoose = require("mongoose");
 const Order = require("../models/orders");
 
-// gets all proposal for customer or service provider
+// tested
 router.get("/:id/:type", cors(), async (req, res) => {
   try {
     const { id, type } = req.params;
+    var proposals;
 
-    var proposal;
-
-    if (type) {
-      proposal = await Proposal.find({
+    if (type == "true") {
+      proposals = await Proposal.find({
         serviceProviderId: id,
       });
     } else {
-      proposal = await Proposal.find({ customerId: id });
+      proposals = await Proposal.find({ customerId: id });
     }
 
-    if (proposal.length != 0) {
-      res.json(proposal);
-    } else res.json({ message: "No proposal was found" });
+    if (proposals.length != 0) {
+      res.status(200).json(proposals);
+    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
