@@ -99,7 +99,7 @@ router.patch("/:id", getRequest, async (req, res) => {
         res.status(400).json(null);
       }
     }
-    // res.json(updatedRequest)
+    res.status(201).json(updatedRequest);
   } catch (err) {
     res.status(400).json(null);
   }
