@@ -23,6 +23,8 @@ router.get("/:id/:type", cors(), async (req, res) => {
 
     if (proposals.length != 0) {
       res.status(200).json(proposals);
+    } else {
+      res.status(400).json(null);
     }
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -43,6 +45,8 @@ router.get("/:id", cors(), async (req, res) => {
 
     if (proposal.length != 0) {
       res.json(proposal);
+    } else {
+      res.json(null);
     }
   } catch (err) {
     res.status(500).json({ message: err.message });
